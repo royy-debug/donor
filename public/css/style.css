@@ -1,0 +1,161 @@
+/* Font */
+body {
+    font-family: 'Roboto', sans-serif;
+  }
+  
+  /* Section Titles */
+  .section-title {
+    text-align: center;
+    color: #e53935; /* Merah material design */
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 2rem;
+  }
+  
+  /* Navigation Links */
+  .nav-link {
+    color: #333;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s ease;
+  }
+  
+  .nav-link:hover {
+    color: #e53935; /* Hover warna merah */
+  }
+  
+  /* Hero Section Text */
+  .hero-text h1 {
+    color: #e53935;
+    font-size: 2.5rem;
+    font-weight: bold;
+  }
+  
+  .hero-text p {
+    color: #666;
+    margin-top: 1rem;
+  }
+  
+  /* Feature Items (About Us Section) */
+  .feature-item {
+    display: flex;
+    align-items: center;
+    background-color:#fff;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  /* Hover efek tetap sama */
+  .feature-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* NEW: Icon wrapper supaya konsisten ukuran dan alignment */
+  .feature-item .icon-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;  /* Fixed width */
+    height: 50px; /* Fixed height */
+    border-radius: 9999px; /* Buat bulat kalau mau */
+    background-color: #ffeaea; /* Optional: kasih background */
+    flex-shrink: 0; /* Supaya gak ngecil */
+  }
+  
+  /* Icon di dalam wrapper */
+  .feature-item .icon {
+    color: #e53935;
+    font-size: 24px; /* Ukuran icon diatur konsisten */
+  }
+    
+  .feature-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 0.25rem;
+  }
+  
+  
+  /* Education Items */
+  .education-item {
+    background-color: #fff5f5;
+    padding: 1.5rem;
+    border-radius: 0.5rem;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease;
+  }
+  
+  .education-item:hover {
+    transform: translateY(-5px);
+  }
+  
+  .education-item .icon-lg {
+    color: #e53935;
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+  }
+  
+  /* Informasi Terkini */
+  .overlay {
+    position: absolute;
+    bottom: 1rem;
+    left: 1rem;
+  }
+  
+  .btn-primary {
+    background-color: #e53935;
+    color: #fff;
+    padding: 0.5rem 1rem;
+    border-radius: 0.375rem;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+  }
+  
+  .btn-primary:hover {
+    background-color: #ef4444;
+  }
+  .swiper-pagination-bullet {
+    width: 12px;
+    height: 12px;
+    background-color: #faf8f8; /* merah */
+    opacity: 1;
+  }
+  
+  .swiper-pagination-bullet-active {
+    background-color: #ef4444; /* merah tua */
+  }
+  
+  
+  
+  /* Container Utility (fallback for Tailwind's container) */
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+  
+  /* Responsive Adjustments */
+  @media (max-width: 768px) {
+    .hero-text h1 {
+      font-size: 1.75rem;
+    }
+  
+    .education-item {
+      padding: 1rem;
+    }
+  
+    .feature-item {
+      flex-direction: column;
+      text-align: center;
+    }
+  
+    .feature-item .icon {
+      margin-bottom: 0.5rem;
+    }
+  }
+  
