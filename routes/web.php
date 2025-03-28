@@ -1,83 +1,53 @@
 <?php
 
 use App\Http\Controllers\DashboardController;
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DonorPreScreenController;
 use App\Http\Controllers\ExportController;
-use App\Exports\DonorsExport;
-use App\Exports\ExportDonor;
-use App\Models\User;
-use Maatwebsite\Excel\Facades\Excel;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\RegisterController;
+use Illuminate\Support\Facades\Route;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\ExportDonor;
 
+// 🔹 Halaman Landing Page
+Route::get('/', [DashboardController::class, 'index'])->name('utama');
 
-// FORM REGISTER
-// Route::get('/register', function () {
-//     return view('register.register'); // View ada di resources/views/login/register.blade.php
-// })->name('register');
-
-// FORM LOGIN
-// Route::get('/login', function () {
-//     return view('register.login'); // View ada di resources/views/login/login.blade.php
-// })->name('login');
-
-// routes/web.php
-
-
-
-
-
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Rute-rute ini otomatis pake middleware "web" karena lo masukin di
-| routes/web.php, jadi session, CSRF, dll. aman.
-|
-*/
-
-// Halaman register + submit register
+// 🔹 Halaman Register & Login
 Route::get('/register', [RegisterController::class, 'showRegisterForm'])->name('register');
 Route::post('/register', [RegisterController::class, 'register'])->name('register.submit');
-
-// Halaman login + proses login
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [LoginController::class, 'login'])->name('login.submit');
-
-// Logout (wajib POST biar aman)
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
-// ✅ Dashboard atau landing setelah login (ADMIN)
-
-// ✅ Dashboard user biasa
-// Route::get('/utama', function () {
-//     return view('user.dashboard');
-// })->middleware(['auth'])->name('user.dashboard');
-
-
-
-// Route::get('/', function () {
-//     return view('welcome');
-// });
+// 🔹 Halaman Informasi & Kontak
+Route::get('/informasi-terkini', function () {
+    return view('informasi');
+})->name('informasi');
 Route::get('/contact', function () {
     return view('contact');
 })->name('contact');
-// Route::get('/utama', [DashboardController::class, 'index'])->middleware('auth');
-Route::get('/', [DashboardController::class, 'index'])->name('utama');
 
-Route::middleware(['web'])->group(function () {
+// 🔹 Rute Donor (Pre-Screening) dengan Middleware Auth
+Route::middleware(['auth'])->group(function () {
     Route::get('/donor/pre-screening', [DonorPreScreenController::class, 'showForm'])->name('donor.prescreen.form');
     Route::post('/donor/pre-screening', [DonorPreScreenController::class, 'submitForm'])->name('donor.prescreen.submit');
 });
 
-Route::get('/informasi-terkini', function () {
-    return view('informasi');
-})->name('informasi');
+// 🔹 Export Data Donor
 Route::get('/donors/export', function () {
     return Excel::download(new ExportDonor, 'donors.xlsx');
-});
+})->name('donors.export');
+
+// 🔹 Tombol "Donate Now" - Cek Login Dulu
+Route::get('/donate', function () {
+    return auth()->check() 
+        ? redirect()->route('donor.prescreen.form') 
+        : redirect()->route('login');
+})->name('donate');
+Route::post('/logout', function () {
+    Auth::logout();
+    return redirect('/'); // Redirect ke halaman utama setelah logout
+})->name('logout');
 
 // Route::get('/check-role', function () {
 //     $user = User::find(2); // atau user mana aja yang udah ada role-nya

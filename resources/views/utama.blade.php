@@ -30,7 +30,7 @@
     <script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
 
-
+    
     <!-- Custom CSS -->
     <link rel="stylesheet" href="/css/style.css" />
 </head>
@@ -43,13 +43,19 @@
             <div class="flex items-center ">
                 <img src="{{ asset('images/logo.svg') }}" alt="Logo" class="object-contain" />
             </div>
-            <nav class="space-x-4">
+            <nav class="flex space-x-4 items-center">
                 <a href="#home_page" class="nav-link">Homepage</a>
                 <a href="#about_us" class="nav-link">About Us</a>
                 <a href="#blood_stock" class="nav-link">Bloodstock</a>
                 <a href="#education" class="nav-link">Education</a>
                 <a href="{{ route('contact') }}" class="nav-link">Contact Us</a>
-            </nav>
+                <form method="POST" action="{{ route('logout') }}" class="inline">
+                    @csrf
+                    <button type="submit" class="nav-link text-red-500 hover:text-red-600 transition duration-300">
+                        Logout
+                    </button>
+                </form>
+            </nav>   
         </div>
     </header>
 
@@ -255,7 +261,7 @@
                         ],
                         backgroundColor: [
                             '#D81B60', // B
-                            '##FF0000	', // O
+                            '#FF0000', // O
                             '#E53935', // A
                             '#8E24AA' // AB
                         ],
