@@ -37,6 +37,6 @@ class RegisterController extends Controller
         Auth::login($user);
 
         // Redirect ke halaman utama user biasa
-        return redirect('/utama');
+        return redirect('/');
     }
 }

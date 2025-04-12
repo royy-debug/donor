@@ -35,7 +35,7 @@ class LoginController extends Controller
             }
 
             // Kalau user biasa
-            return redirect()->intended('/utama');  // ➡️ Dashboard user biasa
+            return redirect()->intended('/');  // ➡️ Dashboard user biasa
         }
 
         // Kalau gagal login
@@ -51,6 +51,6 @@ class LoginController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect('/login');
+        return redirect('/');
     }
 }

@@ -15,7 +15,9 @@ use Filament\Tables\Table;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 use Illuminate\Support\Facades\Storage;
 use Filament\Facades\Filament;
-
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\IOFactory;
+use PhpOffice\PhpSpreadsheet\Worksheet\Drawing;
 
 class DonorResource extends Resource 
 {
@@ -25,63 +27,13 @@ class DonorResource extends Resource
     protected static ?string $navigationGroup = 'Management';
 
     
-    // BISA LIAT LIST?
-    // public static function canViewAny(): bool
-    // {
-    //     $user = Filament::auth()->user();
-    //     if (!$user) {
-    //         \Log::info('User null');
-    //         return false;
-    //     }
-    
-    //     \Log::info('User info', [
-    //         'user' => $user->toArray(),
-    //         'roles' => $user->getRoleNames()
-    //     ]);
-    
-    //     return $user->hasAnyRole(['Admin', 'Staff']);
-    // }
-    
-
-    // BISA BUAT DATA BARU?
-    // public static function canCreate(): bool
-    // {
-    //     return Filament::auth()->user()->hasRole('Admin');
-    // }
-
-    // // BISA LIHAT DETAIL DATA?
-    // public static function canView($record): bool
-    // {
-    //     return Filament::auth()->user()->hasAnyRole(['Admin', 'Staff']);
-    // }
-
-    // // BISA EDIT?
-    // public static function canEdit($record): bool
-    // {
-    //     return Filament::auth()->user()->hasAnyRole(['Admin', 'Staff']);
-    // }
-
-    // // BISA HAPUS?
-    // public static function canDelete($record): bool
-    // {
-    //     return Filament::auth()->user()->hasRole('Admin');
-    // }
-    // public static function canViewAny(): bool
-    // {
-    //     $user = Filament::auth()->user();
-    
-    //     dd($user); // Cek isi user yang login
-    
-    //     return $user->can('view-user');
-    // }
-    
-    
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
                 Forms\Components\Section::make('Data Pendonor')
                     ->schema([
+                        Forms\Components\TextInput::make('nik')->required(),
                         Forms\Components\TextInput::make('name')->required(),
                         Forms\Components\Select::make('gender')
                             ->options(['M' => 'Male', 'F' => 'Female'])->required(),
@@ -89,7 +41,6 @@ class DonorResource extends Resource
                             ->options(['A' => 'A', 'B' => 'B', 'AB' => 'AB', 'O' => 'O'])->required(),
                         Forms\Components\TextInput::make('phone')->tel()->required(),
                         Forms\Components\TextInput::make('email')->email()->required(),
-                        Forms\Components\Textarea::make('address')->nullable(),
                         Forms\Components\TextInput::make('weight')->numeric()->nullable(),
                         Forms\Components\TextInput::make('blood_count')
                             ->label('Jumlah Darah (ml)')
@@ -109,7 +60,6 @@ class DonorResource extends Resource
                         Forms\Components\Select::make('slept_well')
                             ->options([1 => 'Ya', 0 => 'Tidak'])
                             ->required(),
-                        
                     ]),
     
                 Forms\Components\Section::make('Upload Berkas')
@@ -130,46 +80,40 @@ class DonorResource extends Resource
     {
         return $table
             ->columns([
+                Tables\Columns\TextColumn::make('nik')->searchable(),
                 Tables\Columns\TextColumn::make('name')->sortable()->searchable(),
                 Tables\Columns\TextColumn::make('blood_type'),
                 Tables\Columns\TextColumn::make('blood_count')
                 ->label('Jumlah Darah (ml)'),
                 Tables\Columns\ImageColumn::make('ktp_file')
                 ->label('KTP')
-                ->disk('public') // tambahin disk sesuai config kamu
-                ->circular() // atau ->square()
-                
+                ->disk('public') // Tambahkan disk sesuai config kamu
+                ->circular() // Atau ->square()
                 ->url(fn ($record) => asset('storage/' . $record->ktp_file)),
-                
-                
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
                 Tables\Actions\Action::make('show_qr')
-                ->label('QR Code')
-                ->icon('heroicon-o-qr-code')
-                ->action(function ($record, $data) {
-                    // Ga ngapa2in di sini karena cuma buat pop-up modal
-                })
-                ->modalHeading('QR Code Donor')
-                ->modalContent(function ($record) {
-                    $qrCodeSvg = QrCode::size(250)
-                        ->generate('Donor ID: ' . $record->id . ' | Nama: ' . $record->name . ' | Blood_type: ' . $record->blood_type);
+                    ->label('QR Code')
+                    ->icon('heroicon-o-qr-code')
+                    ->action(function ($record, $data) {
+                        // Tidak ada tindakan di sini karena hanya untuk pop-up modal
+                    })
+                    ->modalHeading('QR Code Donor')
+                    ->modalContent(function ($record) {
+                        $qrCodeSvg = QrCode::size(250)
+                            ->generate('Donor ID: ' . $record->id . ' | NIK: ' . $record->nik . ' | Nama: ' . $record->name . ' | Blood_type: ' . $record->blood_type);
 
-                    return view('qr-modal', ['qrCode' => $qrCodeSvg]);
-                })
-                ->modalSubmitAction(false), 
+                        return view('qr-modal', ['qrCode' => $qrCodeSvg]);
+                    })
+                    ->modalSubmitAction(false),
             ])
             ->headerActions([
                 Action::make('Export Excel')
-                    ->action(fn () => Excel::download(new ExportDonor, 'donors.xlsx'))
-                    ->label('Export Excel')
+                ->action(fn () => Excel::download(new ExportDonor(), 'donors.xlsx'))
+                ->label('Export Excel')
                     ->color('primary'),
             ])
-            // ->filters([
-            //     SelectFilter::make('donor_id')
-            //     ->options(Donor)
-            // ])
             ->bulkActions([
                 Tables\Actions\DeleteBulkAction::make(),
             ]);
@@ -204,3 +148,4 @@ class DonorResource extends Resource
         $donor->update(['qr_code' => $filePath]);
     }
 }
+

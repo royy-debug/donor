@@ -7,7 +7,7 @@
 <body class="bg-red-50 min-h-screen flex items-center justify-center">
 
     <div class="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
-        <h1 class="text-2xl font-bold text-center text-red-600 mb-6">Daftar Akun</h1>
+        <h1 class="text-2xl font-bold text-center text-red-600 mb-6">Registrasi Account</h1>
 
         @if ($errors->any())
             <div class="bg-red-100 text-red-700 p-3 mb-4 rounded">
@@ -23,7 +23,7 @@
             @csrf
 
             <div>
-                <label class="block mb-1 text-gray-600">Nama</label>
+                <label class="block mb-1 text-gray-600">Name</label>
                 <input type="text" name="name" required
                        class="w-full px-4 py-2 border rounded focus:ring-2 focus:ring-red-400 focus:outline-none">
             </div>
@@ -48,12 +48,12 @@
 
             <button type="submit"
                     class="w-full bg-red-600 text-white py-2 rounded hover:bg-red-700 transition-all">
-                Daftar & Masuk
+                    Register & Login
             </button>
         </form>
 
         <div class="text-center mt-4">
-            <a href="{{ route('login') }}" class="text-sm text-red-600 hover:underline">Sudah punya akun? Login</a>
+            <a href="{{ route('login') }}" class="text-sm text-red-600 hover:underline">Already have an account? Login</a>
         </div>
     </div>
 

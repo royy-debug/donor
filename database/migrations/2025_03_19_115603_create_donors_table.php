@@ -10,13 +10,13 @@ return new class extends Migration
     {
         Schema::create('donors', function (Blueprint $table) {
             $table->id();
+            $table->string('nik', 16);
             $table->string('name');
             $table->enum('gender', ['M', 'F']);
             $table->enum('blood_type', ['A', 'B', 'AB', 'O']);
             $table->decimal('blood_count', 8, 2)->default(0); // jumlah darah yang didonorkan
             $table->string('phone');
             $table->string('email');
-            $table->text('address')->nullable();
             $table->integer('weight')->nullable();
             
             // Pre-screening

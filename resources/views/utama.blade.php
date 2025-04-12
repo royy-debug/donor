@@ -6,6 +6,7 @@
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
     <title>Blood Donor Application</title>
 
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
 
@@ -30,7 +31,7 @@
     <script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
 
-    
+
     <!-- Custom CSS -->
     <link rel="stylesheet" href="/css/style.css" />
 </head>
@@ -38,145 +39,96 @@
 <body class="font-roboto">
 
     <!-- Header -->
-    <header class="bg-white shadow-md">
-        <div class="container flex justify-between items-center py-5">
-            <div class="flex items-center ">
-                <img src="{{ asset('images/logo.svg') }}" alt="Logo" class="object-contain" />
+    <!-- HEADER -->
+    <header class="fixed top-0 left-0 w-full z-30 bg-white/80 backdrop-blur-md shadow-md">
+        <div class="container mx-auto flex justify-between items-center py-5 px-6">
+            <div class="flex items-center">
+                <img src="{{ asset('images/logo.svg') }}" alt="Logo" class="object-contain h-10" />
             </div>
-            <nav class="flex space-x-4 items-center">
-                <a href="#home_page" class="nav-link">Homepage</a>
-                <a href="#about_us" class="nav-link">About Us</a>
-                <a href="#blood_stock" class="nav-link">Bloodstock</a>
-                <a href="#education" class="nav-link">Education</a>
-                <a href="{{ route('contact') }}" class="nav-link">Contact Us</a>
+            <nav class="flex space-x-4 items-center font-semibold">
+                <a href="#home_page"
+                    class="nav-link text-gray-700 hover:text-red-600 transition duration-300">Homepage</a>
+                <a href="#blood_stock"
+                    class="nav-link text-gray-700 hover:text-red-600 transition duration-300">Bloodstock</a>
+                <a href="#education"
+                    class="nav-link text-gray-700 hover:text-red-600 transition duration-300">Education</a>
                 <form method="POST" action="{{ route('logout') }}" class="inline">
                     @csrf
-                    <button type="submit" class="nav-link text-red-500 hover:text-red-600 transition duration-300">
-                        Logout
-                    </button>
+                    <button type="submit"
+                        class="text-gray-700 hover:text-red-600 transition duration-300">Logout</button>
                 </form>
-            </nav>   
+            </nav>
         </div>
     </header>
 
-    <!-- Hero Section -->
-    <section id="home_page" class="bg-gradient-to-r from-red-100 to-white py-12">
-        <div class="container mx-auto flex flex-col md:flex-row items-center justify-between">
-            <!-- Text sebelah kiri -->
-            <div class="text-left max-w-lg mb-8 md:mb-0">
-                <h1 class="text-4xl font-bold text-red-600 leading-tight">
-                    Blood Donor, Save Lives – Caring For Others Application
+    <!-- HERO SECTION -->
+    <!-- Tambahkan ini di <head> atau sebelum </body> -->
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+
+    <section class="bg-white pt-40 pb-16 relative overflow-hidden" x-data="{ open: false }">
+        <!-- Dekorasi background -->
+        <div class="absolute -left-40 -top-40 w-[1000px] h-[1000px] bg-red-400 rounded-full opacity-30 z-0"></div>
+
+        <div class="container mx-auto flex justify-between items-center py-5 px-6 relative z-10">
+
+            <!-- Konten Kiri -->
+            <div class="max-w-xl animate-slide-up">
+                <h1 class="text-4xl md:text-5xl font-bold text-gray-800 leading-tight">
+                    <span class="text-red-600">"Blood Donor </span>Save Lives – Caring for Others Application"
                 </h1>
                 <p class="mt-4 text-gray-600 text-lg">
-                    A blood donor application that makes it easy for you to donate blood and help others. </p>
-                <div class="mt-6">
-                    <a href="{{ asset(route('donor.prescreen.form')) }}"
-                        class="inline-block bg-red-600 hover:bg-red-700 text-white font-semibold py-3 px-6 rounded-lg shadow-md transition duration-300">
-                        Donate Now
+                    This application makes it easy for you to become a blood donor, find the nearest donor location, and
+                    get the latest information about blood donation. By participating, you are helping to save lives and
+                    strengthen solidarity among others. </p>
+
+                <div class="flex gap-4 mt-6">
+                    <a href="{{ route('donate') }}"
+                        class="bg-red-600 hover:bg-red-700 text-white px-6 py-3 rounded-lg shadow-lg transition-all duration-300 z-20 relative">
+                        Registrasi
                     </a>
+                    <button @click="open = true"
+                        class="border border-red-600 text-red-600 px-6 py-3 rounded-lg hover:bg-red-50 transition-all duration-300 z-20 relative">
+                        Jadwal Donor
+                    </button>
                 </div>
             </div>
 
-            <!-- Logo sebelah kanan -->
-            <div class="flex justify-center items-center ">
-                <img src="{{ asset('images/donor.svg') }}" alt="Illustration of a person donating blood"
-                    class="w-45 h-45" />
+            <!-- Gambar Kanan -->
+            <div class="relative animate-fade-in">
+                <div
+                    class="w-[320px] h-[320px] rounded-full overflow-hidden shadow-xl border-4 border-red-200 transform hover:scale-105 transition duration-500">
+                    <img src="/images/gedung.png" alt="Foto Gedung PMI" class="object-cover w-full h-full" />
+                </div>
             </div>
         </div>
-    </section>
 
-    <!-- About Us Section -->
-    <section id="about_us" class="py-12">
-        <div class="container mx-auto">
-            <h2 class="section-title tracking-widest pb-4 font-Poppins">ABOUT US</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div class="ml pt-8">
-                    <p class="text-gray-600">
-                        "A drop of blood, a million hopes" – together let's donate, we care and share happiness.
-                    </p>
-                    <p class="mt-4 text-gray-600">
-                        Come on, donate blood, an application that makes it easy for you to donate blood, find donor
-                        locations and
-                        Get information about blood donation.
-                    </p>
-                    <p class="mt-4 text-gray-600">
-                        Helping to save and give hope to others, as the saying goes, one drop of your blood can be a
-                        source of blood for those in need.
-                    </p>
-                </div>
-                <div class="space-y-4">
-                    <div class="feature-item flex">
-                        <div class="icon-wrapper">
-                            <i class="fas fa-laptop-medical icon"></i>
-                        </div>
-                        <a href="{{ route('register') }}">
-                            <div class="ml-4">
-                                <h3 class="feature-title">Register Online</h3>
-                                <p class="text-gray-600">Register for Blood Donors Online</p>
-                            </div>
-                    </div>
-                    </a>
+        <!-- MODAL -->
+        <div x-show="open" x-transition
+            class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50" style="display: none;">
+            <div class="bg-white rounded-lg w-11/12 md:w-1/2 p-6 relative shadow-lg">
+                <button @click="open = false"
+                    class="absolute top-2 right-2 text-gray-600 hover:text-red-600 text-2xl">&times;</button>
 
-                    <div class="feature-item flex">
-                        <div class="icon-wrapper">
-                            <i class="fas fa-tint icon"></i>
-                        </div>
-                        <a href="#blood_stock">
-                            <div class="ml-4">
-                                <h3 class="feature-title">Blood Stock</h3>
-                                <p class="text-gray-600">Blood Stock Information</p>
-                            </div>
-                        </a>
-                    </div>
-                    <div x-data="{ open: false }"> <!-- INI ADALAH WRAPPER -->
+                <h2 class="text-2xl font-bold text-red-600 mb-4">Jadwal Donor Darah Terdekat</h2>
 
-                        <!-- Trigger buka modal -->
-                        <div @click="open = true"
-                            class="feature-item flex items-center cursor-pointer p-4 bg-white shadow-md rounded-lg hover:bg-red-100 transition duration-300">
-                            <div class="icon-wrapper text-red-600 text-3xl">
-                                <i class="fas fa-calendar-alt icon"></i>
-                            </div>
-                            <div class="ml-4">
-                                <h3 class="feature-title text-lg font-semibold">Blood Donation Schedule</h3>
-                                <p class="text-gray-600">Nearest Blood Donor Schedule</p>
-                            </div>
-                        </div>
+                <ul class="space-y-4 text-gray-700">
+                    <li><strong>Lokasi:</strong> PMI Kota<br><strong>Tanggal:</strong> 20 Maret 2025</li>
+                    <li><strong>Lokasi:</strong> Lapangan Merdeka<br><strong>Tanggal:</strong> 23 Maret 2025</li>
+                    <li><strong>Lokasi:</strong> Kampus ABC<br><strong>Tanggal:</strong> 28 Maret 2025</li>
+                </ul>
 
-                        <!-- Modal -->
-                        <div x-show="open" x-transition
-                            class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
-                            style="display: none;">
-                            <div class="bg-white rounded-lg w-11/12 md:w-1/2 p-6 relative shadow-lg">
-                                <!-- Tombol Close -->
-                                <button @click="open = false"
-                                    class="absolute top-2 right-2 text-gray-600 hover:text-red-600 text-2xl">&times;</button>
-
-                                <h2 class="text-2xl font-bold text-red-600 mb-4">Nearest Blood Donor Schedule</h2>
-
-                                <ul class="space-y-4 text-gray-700">
-                                    <li><strong>Lokasi:</strong> PMI Kota<br /> <strong>Tanggal:</strong> 20 Maret 2025
-                                    </li>
-                                    <li><strong>Lokasi:</strong> Lapangan Merdeka<br /> <strong>Tanggal:</strong> 23
-                                        Maret 2025</li>
-                                    <li><strong>Lokasi:</strong> Kampus ABC<br /> <strong>Tanggal:</strong> 28 Maret
-                                        2025</li>
-                                </ul>
-
-                                <div class="text-right mt-6">
-                                    <button @click="open = false"
-                                        class="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 transition duration-300">Tutup</button>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div> <!-- Penutup x-data -->
-
+                <div class="text-right mt-6">
+                    <button @click="open = false"
+                        class="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 transition duration-300">
+                        Tutup
+                    </button>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Bloodstock Section -->
+
+
     <section id="blood_stock" class="py-12 bg-gradient-to-l from-red-100 via-gray-50 to-white-100">
         <div class="container mx-auto">
             <h2 class="section-title tracking-widest pb-6 font-Poppins">BLOODSTOCK</h2>
@@ -311,73 +263,98 @@
         </div>
     </section>
 
+    <!-- About Us Section -->
+    <section id="about_us" class="py-12">
+        <div class="container mx-auto">
+            <h2 class="section-title tracking-widest pb-4 font-Poppins">ABOUT US</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="ml pt-8">
+                    <p class="text-gray-600">
+                        "A drop of blood, a million hopes" – together let's donate, we care and share happiness.
+                    </p>
+                    <p class="mt-4 text-gray-600">
+                        Come on, donate blood, an application that makes it easy for you to donate blood, find donor
+                        locations and
+                        Get information about blood donation.
+                    </p>
+                    <p class="mt-4 text-gray-600">
+                        Helping to save and give hope to others, as the saying goes, one drop of your blood can be a
+                        source of blood for those in need.
+                    </p>
+                </div>
+                <div class="space-y-4">
+                    <div class="feature-item flex">
+                        <div class="icon-wrapper">
+                            <i class="fas fa-laptop-medical icon"></i>
+                        </div>
+                        <a href="{{ route('register') }}">
+                            <div class="ml-4">
+                                <h3 class="feature-title">Register Online</h3>
+                                <p class="text-gray-600">Register for Blood Donors Online</p>
+                            </div>
+                    </div>
+                    </a>
 
-    {{-- <section id="blood_stock" class="py-12 bg-gradient-to-l from-red-100 via-gray-50 to-white-100">
-      <div class="container mx-auto">
-        <h2 class="section-title tracking-widest pb-6 font-Poppins">BLOODSTOCK</h2>
+                    <div class="feature-item flex">
+                        <div class="icon-wrapper">
+                            <i class="fas fa-tint icon"></i>
+                        </div>
+                        <a href="#blood_stock">
+                            <div class="ml-4">
+                                <h3 class="feature-title">Blood Stock</h3>
+                                <p class="text-gray-600">Blood Stock Information</p>
+                            </div>
+                        </a>
+                    </div>
+                    <div x-data="{ open: false }"> <!-- INI ADALAH WRAPPER -->
 
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-          <!-- Left: List Data -->
-          <div class="space-y-4">
-            <ul class="space-y-2 text-lg text-gray-700">
-              @foreach ($stok as $item)
-                <li class="flex items-center justify-between border-b pb-2">
-                  <span class="font-medium">Golongan {{ $item->blood_type }}</span>
-                  <span class="text-red-600">{{ $item->total_darah }} ML</span>
-                </li>
-              @endforeach
-            </ul>
+                        <!-- Trigger buka modal -->
+                        <div @click="open = true"
+                            class="feature-item flex items-center cursor-pointer p-4 bg-white shadow-md rounded-lg hover:bg-red-100 transition duration-300">
+                            <div class="icon-wrapper text-red-600 text-3xl">
+                                <i class="fas fa-calendar-alt icon"></i>
+                            </div>
+                            <div class="ml-4">
+                                <h3 class="feature-title text-lg font-semibold">Blood Donation Schedule</h3>
+                                <p class="text-gray-600">Nearest Blood Donor Schedule</p>
+                            </div>
+                        </div>
 
-            @php
-              $totalDarah = $stok->sum('total_darah');
-            @endphp
+                        <!-- Modal -->
+                        <div x-show="open" x-transition
+                            class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+                            style="display: none;">
+                            <div class="bg-white rounded-lg w-11/12 md:w-1/2 p-6 relative shadow-lg">
+                                <!-- Tombol Close -->
+                                <button @click="open = false"
+                                    class="absolute top-2 right-2 text-gray-600 hover:text-red-600 text-2xl">&times;</button>
 
-            <p class="text-xl font-semibold mt-4 pr-5">
-              Total Stok Darah: <span class="text-red-600">{{ $totalDarah }} ML</span>
-            </p>
-          </div>
+                                <h2 class="text-2xl font-bold text-red-600 mb-4">Nearest Blood Donor Schedule</h2>
 
-          <!-- Right: Diagram Chart -->
-          <div>
-            <div id="chart_div" class="shadow-lg rounded-lg bg-white p-4" style="width: 100%; height: 400px;"></div>
-          </div>
+                                <ul class="space-y-4 text-gray-700">
+                                    <li><strong>Lokasi:</strong> PMI Kota<br /> <strong>Tanggal:</strong> 20 Maret 2025
+                                    </li>
+                                    <li><strong>Lokasi:</strong> Lapangan Merdeka<br /> <strong>Tanggal:</strong> 23
+                                        Maret 2025</li>
+                                    <li><strong>Lokasi:</strong> Kampus ABC<br /> <strong>Tanggal:</strong> 28 Maret
+                                        2025</li>
+                                </ul>
+
+                                <div class="text-right mt-6">
+                                    <button @click="open = false"
+                                        class="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 transition duration-300">Tutup</button>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div> <!-- Penutup x-data -->
+
+                </div>
+            </div>
         </div>
+    </section>
 
-        <!-- Chart Script -->
-        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-        <script type="text/javascript">
-          google.charts.load('current', { packages: ['corechart'] });
-          google.charts.setOnLoadCallback(drawChart);
 
-          function drawChart() {
-            var data = google.visualization.arrayToDataTable([
-              ['Golongan Darah', 'Jumlah Stok'],
-              @foreach ($stok as $item)
-                ['{{ $item->blood_type }} ({{ $item->total_darah }})', {{ $item->total_darah }}],
-              @endforeach
-            ]);
-
-            var options = {
-              is3D: true,
-              pieSliceText: 'label',
-              titleTextStyle: { fontSize: 18, bold: true, color: '#333' },
-              legend: { position: 'bottom', textStyle: { fontSize: 12, color: '#555' } },
-              colors: ['#ef4444', '#3b82f6', '#facc15', '#14b8a6'],
-              chartArea: { width: '90%', height: '75%' },
-              backgroundColor: 'transparent',
-              animation: { startup: true, duration: 1000, easing: 'out' },
-            };
-
-            var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
-            chart.draw(data, options);
-          }
-
-          window.addEventListener('resize', drawChart);
-        </script>
-      </div>
-    </section> --}}
-    <!-- Education Section -->
-    <!-- EDUCATION Section -->
     <section id="education" class="py-12 px-4">
         <div class="container mx-auto">
             <h2 class="section-title font-Poppins tracking-widest pb-4">EDUCATION</h2>

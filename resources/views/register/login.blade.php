@@ -7,7 +7,7 @@
 <body class="bg-red-50 min-h-screen flex items-center justify-center">
 
     <div class="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
-        <h1 class="text-2xl font-bold text-center text-red-600 mb-6">Masuk Akun Donor</h1>
+        <h1 class="text-2xl font-bold text-center text-red-600 mb-6">login account Donor</h1>
 
         @if ($errors->any())
             <div class="bg-red-100 text-red-700 p-3 mb-4 rounded">
@@ -47,7 +47,7 @@
         </form>
 
         <div class="text-center mt-4">
-            <a href="{{ route('register') }}" class="text-sm text-red-600 hover:underline">Belum punya akun? Daftar</a>
+            <a href="{{ route('register') }}" class="text-sm text-red-600 hover:underline">Don't have an account? Sign up</a>
         </div>
     </div>
 

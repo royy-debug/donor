@@ -17,7 +17,6 @@ Route::get('/register', [RegisterController::class, 'showRegisterForm'])->name('
 Route::post('/register', [RegisterController::class, 'register'])->name('register.submit');
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [LoginController::class, 'login'])->name('login.submit');
-Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
 // 🔹 Halaman Informasi & Kontak
 Route::get('/informasi-terkini', function () {
@@ -25,7 +24,7 @@ Route::get('/informasi-terkini', function () {
 })->name('informasi');
 Route::get('/contact', function () {
     return view('contact');
-})->name('contact');
+})->name('contact'); 
 
 // 🔹 Rute Donor (Pre-Screening) dengan Middleware Auth
 Route::middleware(['auth'])->group(function () {
@@ -39,15 +38,16 @@ Route::get('/donors/export', function () {
 })->name('donors.export');
 
 // 🔹 Tombol "Donate Now" - Cek Login Dulu
-Route::get('/donate', function () {
-    return auth()->check() 
-        ? redirect()->route('donor.prescreen.form') 
-        : redirect()->route('login');
-})->name('donate');
+// Route::get('/donate', function () {
+//     return auth()->check() 
+//         ? redirect()->route('donor.prescreen.form') 
+//         : redirect()->route('login');
+// })->name('donate');
 Route::post('/logout', function () {
     Auth::logout();
     return redirect('/'); // Redirect ke halaman utama setelah logout
 })->name('logout');
+Route::get('/donate', [DonorPreScreenController::class, 'handleDonate'])->name('donate');
 
 // Route::get('/check-role', function () {
 //     $user = User::find(2); // atau user mana aja yang udah ada role-nya

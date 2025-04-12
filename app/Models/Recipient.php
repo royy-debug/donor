@@ -13,7 +13,6 @@ class Recipient extends Model
         'blood_type',
         'rhesus',
         'phone',
-        'address',
         'required_blood_bags',
         'status',
     ];
