@@ -97,7 +97,7 @@
             <div class="relative animate-fade-in">
                 <div
                     class="w-[320px] h-[320px] rounded-full overflow-hidden shadow-xl border-4 border-red-200 transform hover:scale-105 transition duration-500">
-                    <img src="/images/gedung.png" alt="Foto Gedung PMI" class="object-cover w-full h-full" />
+                    <img src="{{ asset('images/gedung.jpg') }}" alt="Foto Gedung aula" class="object-cover w-full h-full" />
                 </div>
             </div>
         </div>
