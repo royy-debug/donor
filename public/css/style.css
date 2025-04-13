@@ -157,5 +157,17 @@ body {
     .feature-item .icon {
       margin-bottom: 0.5rem;
     }
+    .animate-slide-left {
+      opacity: 0;
+      transform: translateX(-50px);
+      animation: slideLeft 1s ease-out forwards;
+  }
+
+  @keyframes slideLeft {
+      to {
+          opacity: 1;
+          transform: translateX(0);
+      }
+  }
   }
   

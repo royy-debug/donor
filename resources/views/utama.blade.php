@@ -38,10 +38,9 @@
 
 <body class="font-roboto">
 
-    <!-- Header -->
     <!-- HEADER -->
-    <header class="fixed top-0 left-0 w-full z-30 bg-white/80 backdrop-blur-md shadow-md">
-        <div class="container mx-auto flex justify-between items-center py-5 px-6">
+    <header class="fixed top-0 left-0 w-full z-30 bg-white/70 shadow-md">
+        <div class="container mx-auto flex justify-between items-center py-5 px-4">
             <div class="flex items-center">
                 <img src="{{ asset('images/logo.svg') }}" alt="Logo" class="object-contain h-10" />
             </div>
@@ -62,25 +61,27 @@
     </header>
 
     <!-- HERO SECTION -->
-    <!-- Tambahkan ini di <head> atau sebelum </body> -->
-    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
-
     <section class="bg-white pt-40 pb-16 relative overflow-hidden" x-data="{ open: false }">
-        <!-- Dekorasi background -->
-        <div class="absolute -left-40 -top-40 w-[1000px] h-[1000px] bg-red-400 rounded-full opacity-30 z-0"></div>
+        <!-- Background Dekorasi -->
+        <div class="absolute -left-40 -top-40 w-[1100px] h-[1100px] bg-red-600 rounded-full z-0"></div>
 
-        <div class="container mx-auto flex justify-between items-center py-5 px-6 relative z-10">
+        <!-- Background Foto Gedung -->
+        <div class="absolute inset-0 z-0">
+            <img src="{{ asset('images/gedung.jpg') }}" alt="Foto Gedung" class="w-full h-full object-cover opacity-60">
+        </div>
 
-            <!-- Konten Kiri -->
-            <div class="max-w-xl animate-slide-up">
+        <!-- Konten Hero -->
+        <div class="container mx-auto relative z-8 px-6">
+            <div id="heroText"
+                class="max-w-2xl bg-white backdrop-blur-sm p-8 rounded-lg shadow-lg opacity-0 translate-x-[-50px] transition-all duration-700 ease-out">
                 <h1 class="text-4xl md:text-5xl font-bold text-gray-800 leading-tight">
                     <span class="text-red-600">"Blood Donor </span>Save Lives – Caring for Others Application"
                 </h1>
                 <p class="mt-4 text-gray-600 text-lg">
                     This application makes it easy for you to become a blood donor, find the nearest donor location, and
                     get the latest information about blood donation. By participating, you are helping to save lives and
-                    strengthen solidarity among others. </p>
-
+                    strengthen solidarity among others.
+                </p>
                 <div class="flex gap-4 mt-6">
                     <a href="{{ route('donate') }}"
                         class="bg-red-600 hover:bg-red-700 text-white px-6 py-3 rounded-lg shadow-lg transition-all duration-300 z-20 relative">
@@ -92,14 +93,6 @@
                     </button>
                 </div>
             </div>
-
-            <!-- Gambar Kanan -->
-            <div class="relative animate-fade-in">
-                <div
-                    class="w-[320px] h-[320px] rounded-full overflow-hidden shadow-xl border-4 border-red-200 transform hover:scale-105 transition duration-500">
-                    <img src="{{ asset('images/gedung.jpg') }}" alt="Foto Gedung aula" class="object-cover w-full h-full" />
-                </div>
-            </div>
         </div>
 
         <!-- MODAL -->
@@ -108,15 +101,12 @@
             <div class="bg-white rounded-lg w-11/12 md:w-1/2 p-6 relative shadow-lg">
                 <button @click="open = false"
                     class="absolute top-2 right-2 text-gray-600 hover:text-red-600 text-2xl">&times;</button>
-
                 <h2 class="text-2xl font-bold text-red-600 mb-4">Jadwal Donor Darah Terdekat</h2>
-
                 <ul class="space-y-4 text-gray-700">
                     <li><strong>Lokasi:</strong> PMI Kota<br><strong>Tanggal:</strong> 20 Maret 2025</li>
                     <li><strong>Lokasi:</strong> Lapangan Merdeka<br><strong>Tanggal:</strong> 23 Maret 2025</li>
                     <li><strong>Lokasi:</strong> Kampus ABC<br><strong>Tanggal:</strong> 28 Maret 2025</li>
                 </ul>
-
                 <div class="text-right mt-6">
                     <button @click="open = false"
                         class="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 transition duration-300">
@@ -127,6 +117,19 @@
         </div>
     </section>
 
+    <!-- ALPINE + ANIMASI JS -->
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const hero = document.getElementById("heroText");
+            if (hero) {
+                setTimeout(() => {
+                    hero.classList.remove("opacity-0", "translate-x-[-50px]");
+                    hero.classList.add("opacity-100", "translate-x-0");
+                }, 300);
+            }
+        });
+    </script>
 
 
     <section id="blood_stock" class="py-12 bg-gradient-to-l from-red-100 via-gray-50 to-white-100">
@@ -263,6 +266,106 @@
         </div>
     </section>
 
+
+    <!--EDUCATION -->
+    <section id="education" class="py-12 px-4">
+        <div class="container mx-auto">
+            <h2 class="section-title font-Poppins tracking-widest pb-4">EDUCATION</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="education-item">
+                    <i class="fas fa-user-md icon-lg"></i>
+                    <p class="text-gray-600">Ibu Menyusui Dilarang Untuk Melakukan Donor Darah</p>
+                </div>
+                <div class="education-item">
+                    <i class="fas fa-birthday-cake icon-lg"></i>
+                    <p class="text-gray-600">Umur Minimal Untuk Mengikuti Donor Darah Yaitu 16 Tahun Ke Atas</p>
+                </div>
+                <div class="education-item">
+                    <i class="fas fa-smoking-ban icon-lg"></i>
+                    <p class="text-gray-600">Orang Yang Sering Merokok Dilarang Untuk Melakukan Donor Darah</p>
+                </div>
+                <div class="education-item">
+                    <i class="fas fa-female icon-lg"></i>
+                    <p class="text-gray-600">Perempuan Yang Sedang Datang Bulan Dilarang Mengikuti Donor Darah</p>
+                </div>
+                <div class="education-item">
+                    <i class="fas fa-weight icon-lg"></i>
+                    <p class="text-gray-600">Untuk Berat Badan Laki Laki Maupun Perempuan Minimal 47 Kg</p>
+                </div>
+                <div class="education-item">
+                    <i class="fas fa-ban icon-lg"></i>
+                    <p class="text-gray-600">tidak disarankan begadang jika esok harinya mengikuti kegiatan donor darah
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- INFORMASI TERKINI Section -->
+    <section id="informasi_terkini" class="py-16 px-6 bg-gray-50">
+        <div class="container mx-auto">
+            <h2 class="text-3xl font-bold text-red-600 tracking-widest mb-8 text-center font-Poppins">
+                LATEST INFORMATION
+            </h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-10 items-center">
+
+                <!-- Swiper di kiri (2 kolom) -->
+                <div class="md:col-span-2 flex flex-col justify-center items-center relative">
+                    <div class="swiper-container w-full">
+                        <div class="swiper-wrapper">
+                            <div class="swiper-slide">
+                                <img src="{{ asset('images/info1.svg') }}" alt="Info 1"
+                                    class="rounded-lg shadow-xl max-w-full max-h-72 object-contain transition-transform hover:scale-105">
+                            </div>
+                            <div class="swiper-slide">
+                                <img src="{{ asset('images/info2.svg') }}" alt="Info 2"
+                                    class="rounded-lg shadow-xl max-w-full max-h-72 object-contain transition-transform hover:scale-105">
+                            </div>
+                            <div class="swiper-slide">
+                                <img src="{{ asset('images/info3.svg') }}" alt="Info 3"
+                                    class="rounded-lg shadow-xl max-w-full max-h-72 object-contain transition-transform hover:scale-105">
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+                </div>
+
+                <!-- Tombol di kanan (1 kolom) -->
+                <div class="flex flex-col justify-center items-center text-center">
+                    <p class="text-lg font-semibold text-gray-700 mb-6">
+                        See more complete information here!
+                    </p>
+                    <a href="{{ route('informasi') }}"
+                        class="bg-red-600 hover:bg-red-700 text-white px-6 py-3 rounded-md text-sm shadow-md transition-transform transform hover:scale-105">
+                        Read more
+                    </a>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Swiper Script -->
+        <script>
+            const swiper = new Swiper('.swiper-container', {
+                loop: true,
+                autoplay: {
+                    delay: 3000,
+                    disableOnInteraction: false,
+                },
+                navigation: {
+                    nextEl: '.swiper-button-next',
+                    prevEl: '.swiper-button-prev',
+                },
+            });
+        </script>
+
+    </section>
+
+
     <!-- About Us Section -->
     <section id="about_us" class="py-12">
         <div class="container mx-auto">
@@ -352,103 +455,6 @@
                 </div>
             </div>
         </div>
-    </section>
-
-
-    <section id="education" class="py-12 px-4">
-        <div class="container mx-auto">
-            <h2 class="section-title font-Poppins tracking-widest pb-4">EDUCATION</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <div class="education-item">
-                    <i class="fas fa-user-md icon-lg"></i>
-                    <p class="text-gray-600">Ibu Menyusui Dilarang Untuk Melakukan Donor Darah</p>
-                </div>
-                <div class="education-item">
-                    <i class="fas fa-birthday-cake icon-lg"></i>
-                    <p class="text-gray-600">Umur Minimal Untuk Mengikuti Donor Darah Yaitu 16 Tahun Ke Atas</p>
-                </div>
-                <div class="education-item">
-                    <i class="fas fa-smoking-ban icon-lg"></i>
-                    <p class="text-gray-600">Orang Yang Sering Merokok Dilarang Untuk Melakukan Donor Darah</p>
-                </div>
-                <div class="education-item">
-                    <i class="fas fa-female icon-lg"></i>
-                    <p class="text-gray-600">Perempuan Yang Sedang Datang Bulan Dilarang Mengikuti Donor Darah</p>
-                </div>
-                <div class="education-item">
-                    <i class="fas fa-weight icon-lg"></i>
-                    <p class="text-gray-600">Untuk Berat Badan Laki Laki Maupun Perempuan Minimal 47 Kg</p>
-                </div>
-                <div class="education-item">
-                    <i class="fas fa-ban icon-lg"></i>
-                    <p class="text-gray-600">tidak disarankan begadang jika esok harinya mengikuti kegiatan donor darah
-                    </p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- INFORMASI TERKINI Section -->
-    <section id="informasi_terkini" class="py-12 px-4 bg-white">
-        <div class="container mx-auto">
-            <h2 class="text-2xl font-bold text-red-600 tracking-widest mb-6 text-center font-Poppins pb-5">
-                LATEST INFORMATION </h2>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-center">
-                <!-- Swiper di kiri (2 kolom) -->
-                <div class="md:col-span-2 flex flex-col justify-center items-center relative">
-                    <div class="swiper-container w-full">
-                        <div class="swiper-wrapper">
-                            <div class="swiper-slide">
-                                <img src="{{ asset('images/info1.svg') }}" alt=""
-                                    class="rounded-lg shadow-md max-w-full max-h-64 object-contain" />
-                            </div>
-                            <div class="swiper-slide">
-                                <img src="{{ asset('images/info2.svg') }}" alt=""
-                                    class="rounded-lg shadow-md max-w-full max-h-64 object-contain" />
-                            </div>
-                            <div class="swiper-slide">
-                                <img src="{{ asset('images/info3.svg') }}" alt=""
-                                    class="rounded-lg shadow-md max-w-full max-h-64 object-contain" />
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Pagination -->
-                    <div class="swiper-pagination"
-                        style="
-                    position: absolute;
-                    left: 150px;
-                    bottom: 10px;
-                    width: auto;">
-                    </div>
-                </div>
-
-                <!-- Tombol di kanan (1 kolom) -->
-                <div class="flex flex-col justify-center items-center">
-                    <p class="text-lg font-semibold text-gray-700 mb-4 text-center">
-                        See more complete information here! </p>
-                    <a href="{{ route('informasi') }}"
-                        class="bg-red-600 hover:bg-red-700 text-white px-6 py-3 rounded-md text-sm shadow-md transition-transform hover:scale-105">
-                        Read more
-                    </a>
-                </div>
-            </div>
-        </div>
-        <!-- Swiper Script -->
-        <script>
-            const swiper = new Swiper('.swiper-container', {
-                loop: true,
-                autoplay: {
-                    delay: 3000,
-                    disableOnInteraction: false,
-                },
-                pagination: {
-                    el: '.swiper-pagination',
-                    clickable: true,
-                },
-            });
-        </script>
-
     </section>
 
     <!-- Footer -->
