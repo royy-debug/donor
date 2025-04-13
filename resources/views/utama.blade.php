@@ -85,7 +85,7 @@
                 <div class="flex gap-4 mt-6">
                     <a href="{{ route('donate') }}"
                         class="bg-red-600 hover:bg-red-700 text-white px-6 py-3 rounded-lg shadow-lg transition-all duration-300 z-20 relative">
-                        Registrasi
+                        Donor
                     </a>
                     <button @click="open = true"
                         class="border border-red-600 text-red-600 px-6 py-3 rounded-lg hover:bg-red-50 transition-all duration-300 z-20 relative">
