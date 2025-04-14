@@ -1,14 +1,17 @@
 <!DOCTYPE html>
-<html>
+<html lang="id">
 <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Login Donor</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-red-50 min-h-screen flex items-center justify-center">
 
-    <div class="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
-        <h1 class="text-2xl font-bold text-center text-red-600 mb-6">login account Donor</h1>
+    <div class="bg-white p-8 rounded-lg shadow-md w-full max-w-sm sm:max-w-md md:max-w-lg">
+        <h1 class="text-2xl font-bold text-center text-red-600 mb-6">Login Account Donor</h1>
 
+        <!-- Error message -->
         @if ($errors->any())
             <div class="bg-red-100 text-red-700 p-3 mb-4 rounded">
                 <ul class="list-disc ml-4">
@@ -19,6 +22,7 @@
             </div>
         @endif
 
+        <!-- Success message -->
         @if (session('success'))
             <div class="bg-green-100 text-green-700 p-3 mb-4 rounded">
                 {{ session('success') }}

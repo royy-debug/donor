@@ -4,6 +4,7 @@
 <head>
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Blood Donor Application</title>
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
@@ -23,6 +24,7 @@
     <style>
         html {
             scroll-behavior: smooth;
+
         }
     </style>
 
@@ -36,7 +38,32 @@
     <link rel="stylesheet" href="/css/style.css" />
 </head>
 
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        setTimeout(() => {
+            const preloader = document.getElementById('preloader');
+            if (preloader) {
+                preloader.style.opacity = '0';
+                preloader.style.transition = 'opacity 0.5s ease';
+                setTimeout(() => preloader.style.display = 'none', 500);
+            }
+        }, 1500); // delay 1.5 detik
+    });
+</script>
+
+
+
 <body class="font-roboto">
+  <!-- Preloader -->
+<div id="preloader" class="fixed inset-0 bg-white z-50 flex flex-col items-center justify-start pt-32 sm:pt-40">
+    <!-- Tetesan Darah + Gambar -->
+    <div class="relative flex flex-col items-center">
+        <div class="drop animate-drop mb-4 w-5 h-5 bg-red-600 rounded-full"></div>
+        <img src="{{ asset('images/loader-darah.png') }}" alt="Loading"
+            class="w-20 h-20 object-contain sm:w-24 sm:h-24" />
+    </div>
+    <p class="text-red-600 font-semibold text-base sm:text-lg mt-4 animate-pulse">Tunggu ya...</p>
+</div>
 
     <!-- HEADER -->
     <header class="fixed top-0 left-0 w-full z-30 bg-white/70 shadow-md">
@@ -61,7 +88,7 @@
     </header>
 
     <!-- HERO SECTION -->
-    <section class="bg-white pt-40 pb-16 relative overflow-hidden" x-data="{ open: false }">
+    <section id="home_page" class="bg-white pt-40 pb-16 relative overflow-hidden" x-data="{ open: false }">
         <!-- Background Dekorasi -->
         <div class="absolute -left-40 -top-40 w-[1100px] h-[1100px] bg-red-600 rounded-full z-0"></div>
 
@@ -472,10 +499,10 @@
                 <div class="w-full md:w-1/3 mb-6">
                     <h4 class="text-lg font-semibold mb-4">Quick Links</h4>
                     <ul class="space-y-2 text-sm">
-                        <li><a href="#" class="hover:text-gray-300">Homepage</a></li>
-                        <li><a href="#" class="hover:text-gray-300">About Us</a></li>
-                        <li><a href="#" class="hover:text-gray-300">Bloodstock</a></li>
-                        <li><a href="#" class="hover:text-gray-300">Education</a></li>
+                        <li><a href="#home_page" class="hover:text-gray-300">Homepage</a></li>
+                        <li><a href="#about_us" class="hover:text-gray-300">About Us</a></li>
+                        <li><a href="#blood_stock" class="hover:text-gray-300">Bloodstock</a></li>
+                        <li><a href="{{ route('contact') }}" class="hover:text-gray-300">Contact Us</a></li>
                     </ul>
                 </div>
                 <div class="w-full md:w-1/3 mb-6">

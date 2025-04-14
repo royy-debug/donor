@@ -35,7 +35,7 @@
         <img
           src="{{ asset('images/foto.svg') }}"
           alt="Palang Merah SMKN 6 Jember"
-          class="rounded-3xl shadow-lg object-cover w-full max-h-[500px]"
+          class="rounded-3xl shadow-lg object-cover w-full max-h-[500px] sm:max-h-[400px]"
         />
       </div>
     </section>
@@ -50,7 +50,7 @@
           </p>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-10 text-center fade-in">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 text-center fade-in">
           <!-- Telepon -->
           <div class="flex flex-col items-center bg-gray-50 p-6 rounded-xl shadow hover:shadow-lg transition duration-300">
             <div class="bg-red-100 rounded-full w-16 h-16 flex items-center justify-center mb-4">
@@ -88,6 +88,6 @@
     <!-- Footer -->
     <footer class="bg-red-600 p-4 text-white text-center">
       &copy; {{ date('Y') }} Aplikasi Donor Darah
-  </footer>
+    </footer>
   </body>
 </html>
