@@ -147,6 +147,10 @@ body {
   background-color: #dc2626;
   border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
   position: relative;
+  -webkit-border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+  -moz-border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+  -ms-border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+  -o-border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
 }
 
 @keyframes drop {

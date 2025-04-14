@@ -40,18 +40,22 @@
 
 <script>
     document.addEventListener("DOMContentLoaded", function () {
-        setTimeout(() => {
-            const preloader = document.getElementById('preloader');
-            if (preloader) {
+        const preloader = document.getElementById('preloader');
+
+        if (preloader) {
+            // Biarkan preloader tampil 1.5 detik dulu
+            setTimeout(() => {
+                // Lakukan fade-out
                 preloader.style.opacity = '0';
-                preloader.style.transition = 'opacity 0.5s ease';
-                setTimeout(() => preloader.style.display = 'none', 500);
-            }
-        }, 1500); // delay 1.5 detik
+
+                // Tunggu transisi selesai sebelum dihilangkan dari DOM
+                preloader.addEventListener('transitionend', () => {
+                    preloader.style.display = 'none';
+                });
+            }, 1500);
+        }
     });
 </script>
-
-
 
 <body class="font-roboto">
   <!-- Preloader -->
