@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
 
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -33,13 +34,12 @@
     <script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
 
-
     <!-- Custom CSS -->
     <link rel="stylesheet" href="/css/style.css" />
 </head>
 
 <script>
-   document.addEventListener("DOMContentLoaded", function () {
+    document.addEventListener("DOMContentLoaded", function() {
         setTimeout(() => {
             const preloader = document.getElementById('preloader');
             if (preloader) {
@@ -52,16 +52,16 @@
 </script>
 
 <body class="font-roboto">
-  <!-- Preloader -->
-<div id="preloader" class="fixed inset-0 bg-white z-50 flex flex-col items-center justify-start pt-32 sm:pt-40">
-    <!-- Tetesan Darah + Gambar -->
-    <div class="relative flex flex-col items-center">
-        <div class="drop animate-drop mb-4 w-5 h-5 bg-red-600 rounded-full"></div>
-        <img src="{{ asset('images/loader-darah.png') }}" alt="Loading"
-            class="w-20 h-20 object-contain sm:w-24 sm:h-24" />
+    <!-- Preloader -->
+    <div id="preloader" class="fixed inset-0 bg-white z-50 flex flex-col items-center justify-start pt-32 sm:pt-40">
+        <!-- Tetesan Darah + Gambar -->
+        <div class="relative flex flex-col items-center">
+            <div class="drop animate-drop mb-4 w-5 h-5 bg-red-600 rounded-full"></div>
+            <img src="{{ asset('images/loader-darah.png') }}" alt="Loading"
+                class="w-20 h-20 object-contain sm:w-24 sm:h-24" />
+        </div>
+        <p class="text-red-600 font-semibold text-base sm:text-lg mt-4 animate-pulse">Tunggu ya...</p>
     </div>
-    <p class="text-red-600 font-semibold text-base sm:text-lg mt-4 animate-pulse">Tunggu ya...</p>
-</div>
 
     <!-- HEADER -->
     <header class="fixed top-0 left-0 w-full z-30 bg-white/70 shadow-md">
@@ -156,36 +156,43 @@
         });
     </script>
 
+    <!-- BLOOD STOCK SECTION -->
+    <section id="blood_stock" class="py-12 bg-gradient-to-l from-red-100 via-gray-50 to-white-100">
+        <div class="container mx-auto px-4">
+            <h2 class="section-title tracking-widest pb-6 font-Poppins text-center text-3xl sm:text-4xl"
+                data-aos="fade-down" data-aos-duration="1000">
+                BLOODSTOCK
+            </h2>
 
-  <section id="blood_stock" class="py-12 bg-gradient-to-l from-red-100 via-gray-50 to-white-100">
-    <div class="container mx-auto px-4">
-        <h2 class="section-title tracking-widest pb-6 font-Poppins text-center text-3xl sm:text-4xl">BLOODSTOCK</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
 
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Left: List Data -->
+                <div class="space-y-4" data-aos="fade-right" data-aos-duration="1000">
+                    <ul class="space-y-2 text-lg text-gray-700">
+                        @foreach ($stok as $item)
+                            <li class="flex items-center justify-between border-b pb-2 hover:bg-gray-50 transition duration-300 cursor-pointer"
+                                data-aos="fade-up" data-aos-delay="{{ $loop->index * 100 }}">
+                                <span class="font-medium">Blood type {{ $item->blood_type }}</span>
+                                <span class="text-red-600">{{ $item->total_darah }} ML</span>
+                            </li>
+                        @endforeach
+                    </ul>
 
-            <!-- Left: List Data -->
-            <div class="space-y-4">
-                <ul class="space-y-2 text-lg text-gray-700">
-                    @foreach ($stok as $item)
-                        <li class="flex items-center justify-between border-b pb-2 hover:bg-gray-50 transition duration-300 cursor-pointer">
-                            <span class="font-medium">Blood type {{ $item->blood_type }}</span>
-                            <span class="text-red-600">{{ $item->total_darah }} ML</span>
-                        </li>
-                    @endforeach
-                </ul>
+                    @php
+                        $totalDarah = $stok->sum('total_darah');
+                    @endphp
 
-                @php
-                    $totalDarah = $stok->sum('total_darah');
-                @endphp
+                    <p class="text-xl font-semibold mt-4 pr-5" data-aos="fade-up"
+                        data-aos-delay="{{ count($stok) * 100 }}">
+                        Total Blood Stock: <span class="text-red-600">{{ $totalDarah }} ML</span>
+                    </p>
+                </div>
 
-                <p class="text-xl font-semibold mt-4 pr-5">
-                    Total Blood Stock: <span class="text-red-600">{{ $totalDarah }} ML</span>
-                </p>
-            </div>
-
-            <!-- Right: Donut Chart -->
-            <div class="shadow-lg rounded-lg bg-white p-4 flex justify-center items-center" style="width: 100%; height: 400px;">
-                <canvas id="donutChart" width="400" height="400"></canvas>
+                <!-- Right: Donut Chart -->
+                <div class="shadow-lg rounded-lg bg-white p-4 flex justify-center items-center"
+                    style="width: 100%; height: 400px;" data-aos="zoom-in" data-aos-duration="1200">
+                    <canvas id="donutChart" width="400" height="400"></canvas>
+                </div>
             </div>
         </div>
 
@@ -196,16 +203,19 @@
         <script>
             const ctx = document.getElementById('donutChart').getContext('2d');
 
-            // Plugin custom buat teks di tengah
             const centerText = {
                 id: 'centerText',
                 beforeDraw(chart, args, options) {
-                    const { width, height, ctx } = chart;
+                    const {
+                        width,
+                        height,
+                        ctx
+                    } = chart;
                     ctx.restore();
                     const fontSize = (height / 120).toFixed(2);
                     ctx.font = `${fontSize}em sans-serif`;
                     ctx.textBaseline = 'middle';
-                    ctx.fillStyle = '#ef4444'; // warna teks tengah
+                    ctx.fillStyle = '#ef4444';
 
                     const text = '{{ $totalDarah }} ml';
                     const textX = Math.round((width - ctx.measureText(text).width) / 2);
@@ -265,10 +275,10 @@
                     }
                 },
                 animation: {
-                    animateRotate: true,      // Animasi putar chart
-                    animateScale: true,       // Skalakan chart saat pertama kali muncul
-                    easing: 'easeInOutQuart', // Efek animasi lebih halus
-                    duration: 1500,           // Durasi animasi rotasi
+                    animateRotate: true,
+                    animateScale: true,
+                    easing: 'easeInOutQuart',
+                    duration: 1500,
                 },
                 hover: {
                     mode: 'nearest',
@@ -276,91 +286,124 @@
                 }
             };
 
-            // Register plugin centerText pas bikin chart
             const donutChart = new Chart(ctx, {
                 type: 'doughnut',
                 data: data,
                 options: options,
-                plugins: [centerText] // <-- MASUKIN PLUGIN DI SINI BRO!
+                plugins: [centerText]
             });
         </script>
-    </div>
-</section>
+
+        <!-- AOS Animate on Scroll -->
+        <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
+        <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+        <script>
+            AOS.init();
+        </script>
+    </section>
 
 
 
-    <!--EDUCATION -->
-<!-- === EDUCATION SECTION === -->
-<section id="education" class="py-12 px-4 bg-white">
-    <div class="container mx-auto">
-        <h2 class="section-title font-Poppins tracking-widest pb-4 text-2xl font-semibold text-center">EDUCATION</h2>
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <div class="education-item fade-up text-center">
-                <i class="fas fa-user-md icon-lg text-3xl text-red-600 mb-4"></i>
-                <p class="text-gray-600">Ibu Menyusui Dilarang Untuk Melakukan Donor Darah</p>
-            </div>
-            <div class="education-item fade-up text-center">
-                <i class="fas fa-birthday-cake icon-lg text-3xl text-red-600 mb-4"></i>
-                <p class="text-gray-600">Umur Minimal Untuk Mengikuti Donor Darah Yaitu 16 Tahun Ke Atas</p>
-            </div>
-            <div class="education-item fade-up text-center">
-                <i class="fas fa-smoking-ban icon-lg text-3xl text-red-600 mb-4"></i>
-                <p class="text-gray-600">Orang Yang Sering Merokok Dilarang Untuk Melakukan Donor Darah</p>
-            </div>
-            <div class="education-item fade-up text-center">
-                <i class="fas fa-female icon-lg text-3xl text-red-600 mb-4"></i>
-                <p class="text-gray-600">Perempuan Yang Sedang Datang Bulan Dilarang Mengikuti Donor Darah</p>
-            </div>
-            <div class="education-item fade-up text-center">
-                <i class="fas fa-weight icon-lg text-3xl text-red-600 mb-4"></i>
-                <p class="text-gray-600">Untuk Berat Badan Laki Laki Maupun Perempuan Minimal 47 Kg</p>
-            </div>
-            <div class="education-item fade-up text-center">
-                <i class="fas fa-ban icon-lg text-3xl text-red-600 mb-4"></i>
-                <p class="text-gray-600">Tidak Disarankan Begadang Jika Esok Harinya Mengikuti Kegiatan Donor Darah</p>
+
+    <!-- === EDUCATION SECTION === -->
+    <section id="education" class="py-12 px-4 bg-white">
+        <div class="container mx-auto">
+            <h2 class="section-title tracking-widest pb-6 font-Poppins text-center text-3xl sm:text-4xl">EDUCATION</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+                <!-- Item 1: Ibu Menyusui -->
+                <div class="education-item text-center animate-fade-up">
+                    <lottie-player src="https://lottie.host/8c30147f-e3e0-40cd-8d06-f9242013c63e/3lQaXJj0v1.json"
+                        background="transparent" speed="1" style="width: 150px; height: 150px; margin: 0 auto;"
+                        loop autoplay></lottie-player>
+                    <p class="text-gray-600 mt-4">Ibu Menyusui Dilarang Untuk Melakukan Donor Darah</p>
+                </div>
+
+                <!-- Item 2: Umur Minimal -->
+                <div class="education-item text-center animate-fade-up">
+                    <lottie-player src="https://assets2.lottiefiles.com/packages/lf20_zpjfsp1e.json"
+                        background="transparent" speed="1" style="width: 150px; height: 150px; margin: 0 auto;"
+                        loop autoplay></lottie-player>
+                    <p class="text-gray-600 mt-4">Umur Minimal Untuk Mengikuti Donor Darah Yaitu 16 Tahun Ke Atas</p>
+                </div>
+
+                <!-- Item 3: Perokok -->
+                <div class="education-item text-center animate-fade-up">
+                    <lottie-player src="https://lottie.host/c690e32e-c6ae-4edb-944f-3cd448877751/3IPodRg1mv.json"
+                        background="transparent" speed="1" style="width: 150px; height: 150px; margin: 0 auto;"
+                        loop autoplay></lottie-player>
+                    <p class="text-gray-600 mt-4">Orang Yang Sering Merokok Dilarang Untuk Melakukan Donor Darah</p>
+                </div>
+
+                <!-- Item 4: Datang Bulan -->
+                <div class="education-item text-center animate-fade-up">
+                    <lottie-player src="https://lottie.host/3df58f2c-9c0f-4afc-873e-6597d1f106d6/lDpBdZGsmF.json"
+                        background="transparent" speed="1" style="width: 150px; height: 150px; margin: 0 auto;"
+                        loop autoplay></lottie-player>
+                    <p class="text-gray-600 mt-4">Perempuan Yang Sedang Datang Bulan Dilarang Mengikuti Donor Darah</p>
+                </div>
+
+                <!-- Item 5: Berat Badan -->
+                <div class="education-item text-center animate-fade-up">
+                    <lottie-player src="https://lottie.host/dff74744-13aa-4ca6-87c4-0ad9b15c8214/nJzb1vV20c.json"
+                        background="transparent" speed="1" style="width: 150px; height: 150px; margin: 0 auto;"
+                        loop autoplay></lottie-player>
+                    <p class="text-gray-600 mt-4">Untuk Berat Badan Laki Laki Maupun Perempuan Minimal 47 Kg</p>
+                </div>
+
+                <!-- Item 6: Begadang -->
+                <div class="education-item text-center animate-fade-up">
+                    <lottie-player src="https://lottie.host/31536a31-043d-42b2-a7e5-9ba920297c43/PjdkwR9ne4.json"
+                        background="transparent" speed="1" style="width: 150px; height: 150px; margin: 0 auto;"
+                        loop autoplay></lottie-player>
+                    <p class="text-gray-600 mt-4">Tidak Disarankan Begadang Jika Esok Harinya Mengikuti Kegiatan Donor
+                        Darah</p>
+                </div>
+
             </div>
         </div>
-    </div>
-</section>
+    </section>
 
-<!-- === FADE-UP CSS === -->
-<style>
-    .fade-up {
-        opacity: 0;
-        transform: translateY(30px);
-        transition: opacity 0.8s ease, transform 0.8s ease;
-        will-change: opacity, transform;
-    }
 
-    .fade-up.visible {
-        opacity: 1;
-        transform: none;
-    }
-</style>
 
-<!-- === SCROLL ANIMATION JS === -->
-<script>
-    document.addEventListener("DOMContentLoaded", () => {
-        const items = document.querySelectorAll('.fade-up');
+    <!-- === FADE-UP CSS === -->
+    <style>
+        .fade-up {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+            will-change: opacity, transform;
+        }
 
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach((entry, index) => {
-                if (entry.isIntersecting) {
-                    setTimeout(() => {
-                        entry.target.classList.add('visible');
-                    }, index * 150);
-                } else {
-                    // Reset animasi ketika keluar dari layar
-                    entry.target.classList.remove('visible');
-                }
+        .fade-up.visible {
+            opacity: 1;
+            transform: none;
+        }
+    </style>
+
+    <!-- === SCROLL ANIMATION JS === -->
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const items = document.querySelectorAll('.fade-up');
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach((entry, index) => {
+                    if (entry.isIntersecting) {
+                        setTimeout(() => {
+                            entry.target.classList.add('visible');
+                        }, index * 150);
+                    } else {
+                        // Reset animasi ketika keluar dari layar
+                        entry.target.classList.remove('visible');
+                    }
+                });
+            }, {
+                threshold: 0.1
             });
-        }, {
-            threshold: 0.1
-        });
 
-        items.forEach(item => observer.observe(item));
-    });
-</script>
+            items.forEach(item => observer.observe(item));
+        });
+    </script>
 
 
 

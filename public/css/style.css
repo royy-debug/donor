@@ -141,6 +141,7 @@ body {
 }
 
 
+  /*loading animation*/
 .drop {
   width: 20px;
   height: 20px;
@@ -171,6 +172,21 @@ body {
 
 .animate-drop {
   animation: drop 1.5s infinite ease-in-out;
+}
+
+@keyframes fade-up {
+  0% { opacity: 0; transform: translateY(20px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+@keyframes fade-in {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+.animate-fade-up {
+  animation: fade-up 1s ease-out both;
+}
+.animate-fade-in {
+  animation: fade-in 1s ease-out both;
 }
 
 
