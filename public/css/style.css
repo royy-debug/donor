@@ -127,19 +127,6 @@ body {
   background-color: #ef4444;
 }
 
-.swiper-pagination-bullet {
-  width: 12px;
-  height: 12px;
-  background-color: #faf8f8;
-  /* merah */
-  opacity: 1;
-}
-
-.swiper-pagination-bullet-active {
-  background-color: #ef4444;
-  /* merah tua */
-}
-
 
   /*loading animation*/
 .drop {

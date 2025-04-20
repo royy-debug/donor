@@ -51,7 +51,7 @@
     });
 </script>
 
-<body class="font-roboto">
+<body class="font-roboto overflow-x-hidden">
     <!-- Preloader -->
     <div id="preloader" class="fixed inset-0 bg-white z-50 flex flex-col items-center justify-start pt-32 sm:pt-40">
         <!-- Tetesan Darah + Gambar -->
@@ -73,7 +73,7 @@
                 <a href="#home_page"
                     class="nav-link text-gray-700 hover:text-red-600 transition duration-300">Homepage</a>
                 <a href="#blood_stock"
-                    class="nav-link text-gray-700 hover:text-red-600 transition duration-300">Bloodstock</a>
+                    class="nav-link text-gray-700 hover:text-red-600 transition duration-300">Stock</a>
                 <a href="#education"
                     class="nav-link text-gray-700 hover:text-red-600 transition duration-300">Education</a>
                 <form method="POST" action="{{ route('logout') }}" class="inline">
@@ -409,7 +409,7 @@
 
     <!-- INFORMASI TERKINI Section -->
     <section id="informasi_terkini" class="py-16 px-6 bg-gray-50">
-        <div class="container mx-auto">
+        <div class="container mx-auto overflow-hidden">
             <h2 class="text-3xl font-bold text-red-600 tracking-widest mb-8 text-center font-Poppins">
                 LATEST INFORMATION
             </h2>
@@ -418,7 +418,7 @@
 
                 <!-- Swiper di kiri (2 kolom) -->
                 <div class="md:col-span-2 flex flex-col justify-center items-center relative">
-                    <div class="swiper-container w-full">
+                    <div class="swiper-container info-swiper w-full overflow-hidden">
                         <div class="swiper-wrapper">
                             <div class="swiper-slide">
                                 <img src="{{ asset('images/info1.svg') }}" alt="Info 1"
@@ -456,11 +456,11 @@
 
         <!-- Swiper Script -->
         <script>
-            const swiper = new Swiper('.swiper-container', {
+            const swiper = new Swiper('.info-swiper', {
                 loop: true,
                 autoplay: {
                     delay: 3000,
-                    disableOnInteraction: false,
+                    disableOnInteraction: true,
                 },
                 navigation: {
                     nextEl: '.swiper-button-next',
