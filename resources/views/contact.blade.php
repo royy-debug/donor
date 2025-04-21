@@ -49,8 +49,9 @@
             <i class="fas fa-phone-alt text-red-500 text-2xl"></i>
           </div>
           <h3 class="text-lg font-semibold mb-1">Call Us</h3>
-          <p class="text-gray-600">+62896452728789</p>
-          <p class="text-gray-600">+62896452728789</p>
+          <a href="https://wa.me/6287861589235" target="_blank" class="text-gray-600 hover:text-red-500 transition">
+            +6287861589235
+          </a>
         </div>
 
         <!-- Instagram -->
@@ -60,7 +61,9 @@
           </div>
           <h3 class="text-lg font-semibold mb-1">Instagram</h3>
           <p class="text-gray-600">Visit Our Instagram</p>
-          <p class="text-red-500 font-semibold">@PMR_WIRA</p>
+          <a href="https://www.instagram.com/_praskanamber?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" class="text-red-500 font-semibold hover:underline">
+            PMR_WIRA
+          </a>
         </div>
 
         <!-- Lokasi -->
@@ -69,10 +72,12 @@
             <i class="fas fa-map-marker-alt text-red-500 text-2xl"></i>
           </div>
           <h3 class="text-lg font-semibold mb-1">Lokasi Kami</h3>
-          <p class="text-gray-600 text-sm">
-            Jl. PB. Sudirman, Tekoan, Tanggul Kulon, Kec. Tanggul, Kabupaten Jember, Jawa Timur 68155
-          </p>
-        </div>
+  <a href="https://maps.app.goo.gl/jDT7QWAa4BgppRgV8 "
+     target="_blank"
+     rel="noopener noreferrer"
+     class="text-gray-600 text-sm hover:text-red-600 transition">
+    Jl. PB. Sudirman, Tekoan, Tanggul Kulon, Kec. Tanggul, Kabupaten Jember, Jawa Timur 68155
+  </a>
       </div>
     </div>
   </section>

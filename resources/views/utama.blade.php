@@ -47,7 +47,7 @@
                 preloader.style.transition = 'opacity 0.5s ease';
                 setTimeout(() => preloader.style.display = 'none', 500);
             }
-        }, 1500); // delay 1.5 detik
+        }, 500); // delay 1.5 detik
     });
 </script>
 
@@ -64,26 +64,121 @@
     </div>
 
     <!-- HEADER -->
-    <header class="fixed top-0 left-0 w-full z-30 bg-white/70 shadow-md">
-        <div class="container mx-auto flex justify-between items-center py-5 px-4">
-            <div class="flex items-center">
-                <img src="{{ asset('images/logo.svg') }}" alt="Logo" class="object-contain h-10" />
-            </div>
-            <nav class="flex space-x-4 items-center font-semibold">
-                <a href="#home_page"
-                    class="nav-link text-gray-700 hover:text-red-600 transition duration-300">Homepage</a>
-                <a href="#blood_stock"
-                    class="nav-link text-gray-700 hover:text-red-600 transition duration-300">Stock</a>
-                <a href="#education"
-                    class="nav-link text-gray-700 hover:text-red-600 transition duration-300">Education</a>
-                <form method="POST" action="{{ route('logout') }}" class="inline">
-                    @csrf
-                    <button type="submit"
-                        class="text-gray-700 hover:text-red-600 transition duration-300">Logout</button>
-                </form>
-            </nav>
+    <!-- Tambahkan Alpine.js di <head> -->
+<script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+
+<header class="fixed top-0 left-0 w-full z-30 bg-white/70 shadow-md" x-data="{ open: false }">
+    <div class="container mx-auto flex justify-between items-center py-5 px-4">
+        <!-- Logo -->
+        <div class="flex items-center">
+            <img src="{{ asset('images/logo.svg') }}" alt="Logo" class="object-contain h-10" />
         </div>
-    </header>
+
+        <!-- Burger button (mobile) -->
+        <div class="md:hidden">
+            <button @click="open = !open" class="text-gray-700 focus:outline-none">
+                <!-- Hamburger icon -->
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2"
+                    viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+                    <path x-show="!open" d="M4 6h16M4 12h16M4 18h16" />
+                    <path x-show="open" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </button>
+        </div>
+
+        <!-- Navigation -->
+        <nav class="hidden md:flex space-x-4 items-center font-semibold">
+            <a href="#home_page" class="nav-link text-gray-700 hover:text-red-600 transition duration-300">Homepage</a>
+            <a href="#blood_stock" class="nav-link text-gray-700 hover:text-red-600 transition duration-300">Stock</a>
+            <a href="#education" class="nav-link text-gray-700 hover:text-red-600 transition duration-300">Education</a>
+            <form method="POST" action="{{ route('logout') }}" class="inline">
+                @csrf
+                <button type="submit" class="text-gray-700 hover:text-red-600 transition duration-300">Logout</button>
+            </form>
+        </nav>
+    </div>
+
+    <!-- Mobile Nav Menu -->
+    <div
+    x-show="open"
+    x-transition:enter="transition ease-out duration-300"
+    x-transition:enter-start="opacity-0"
+    x-transition:enter-end="opacity-100"
+    x-transition:leave="transition ease-in duration-200"
+    x-transition:leave-start="opacity-100"
+    x-transition:leave-end="opacity-0"
+    class="fixed inset-0 z-40 bg-black bg-opacity-50 md:hidden"
+    @click.away="open = false" @keydown.escape.window="open = false"
+>
+    <!-- Drawer -->
+    <div
+        x-show="open"
+        x-transition:enter="transition-transform ease-out duration-300"
+        x-transition:enter-start="translate-x-full opacity-0"
+        x-transition:enter-end="translate-x-0 opacity-100"
+        x-transition:leave="transition-transform ease-in duration-200"
+        x-transition:leave-start="translate-x-0 opacity-100"
+        x-transition:leave-end="translate-x-full opacity-0"
+        class="fixed right-0 top-0 h-full w-64 bg-white shadow-xl p-6 z-50 space-y-4 font-semibold"
+    >
+        <!-- Close Button -->
+        <button @click="open = false" class="absolute top-4 right-4 text-gray-600 hover:text-red-600 transition">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2"
+                viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M6 18L18 6M6 6l12 12" />
+            </svg>
+        </button>
+
+
+<!-- Mobile Nav Links with Icons -->
+<a href="#home_page"    @click="open = false"
+class="flex items-center gap-2 text-gray-700 hover:text-red-600 transition duration-300">
+    
+    <!-- Home Icon -->
+    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2"
+        viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M3 12l2-2m0 0l7-7 7 7m-9 9v-6h4v6" />
+    </svg>
+    Homepage
+</a>
+
+<a href="#blood_stock"  @click="open = false"
+ class="flex items-center gap-2 text-gray-700 hover:text-red-600 transition duration-300">
+    <!-- Drop Icon -->
+    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2"
+        viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M12 2C12 2 7 8 7 12a5 5 0 0010 0c0-4-5-10-5-10z" />
+    </svg>
+    Stock
+</a>
+
+<a href="#education"  @click="open = false" class="flex items-center gap-2 text-gray-700 hover:text-red-600 transition duration-300">
+    <!-- Book Icon -->
+    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2"
+        viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M4 19.5A2.5 2.5 0 016.5 17H20" />
+        <path d="M4 4.5A2.5 2.5 0 016.5 7H20v14H6.5a2.5 2.5 0 01-2.5-2.5z" />
+    </svg>
+    Education
+</a>
+
+<form method="POST" action="{{ route('logout') }}">
+    @csrf
+    <button type="submit" class="flex items-center gap-2 text-gray-700 hover:text-red-600 transition duration-300 w-full text-left">
+        <!-- Logout Icon -->
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2"
+            viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M17 16l4-4m0 0l-4-4m4 4H7" />
+            <path d="M3 21h4a2 2 0 002-2V5a2 2 0 00-2-2H3" />
+        </svg>
+        Logout
+    </button>
+</form>
+    </div>
+</div>
+
+</header>
+
 
     <!-- HERO SECTION -->
     <section id="home_page" class="bg-white pt-40 pb-16 relative overflow-hidden" x-data="{ open: false }">
