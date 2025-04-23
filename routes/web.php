@@ -26,7 +26,7 @@ Route::get('/contact', function () {
     return view('contact');
 })->name('contact'); 
 
-// 🔹 Rute Donor (Pre-Screening) dengan Middleware Auth
+// 🔹 Rute Donor (Pre-Screening) dengan Middleware Auth 
 Route::middleware(['auth'])->group(function () {
     Route::get('/donor/pre-screening', [DonorPreScreenController::class, 'showForm'])->name('donor.prescreen.form');
     Route::post('/donor/pre-screening', [DonorPreScreenController::class, 'submitForm'])->name('donor.prescreen.submit');
