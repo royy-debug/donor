@@ -1,6 +1,7 @@
 import { defineConfig } from 'vite'
 import laravel, { refreshPaths } from 'laravel-vite-plugin'
 import tailwindcss from 'tailwindcss';
+import './resources/js/filament-realtime.js';
 import autoprefixer from 'autoprefixer';
 
 export default defineConfig({

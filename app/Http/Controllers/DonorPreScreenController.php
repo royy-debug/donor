@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Donor;
+use App\Events\DonorCreated;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 
@@ -50,6 +51,8 @@ class DonorPreScreenController extends Controller
             'has_disease_history' => $validated['has_disease_history'],
             'slept_well' => $validated['slept_well'],
         ]);
+        event(new DonorCreated($donor));
+
         // Generate QR Code (dari ID donor misalnya)
         $qrData = json_encode([
             'id' => $donor->id,

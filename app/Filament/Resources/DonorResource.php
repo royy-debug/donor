@@ -4,6 +4,7 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\DonorResource\Pages;
 use App\Models\Donor;
+use Filament\Tables\Actions\RestoreBulkAction;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -93,6 +94,7 @@ class DonorResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\RestoreAction::make(), // jika kamu ingin tampilkan
                 Tables\Actions\Action::make('show_qr')
                     ->label('QR Code')
                     ->icon('heroicon-o-qr-code')
@@ -116,6 +118,8 @@ class DonorResource extends Resource
             ])
             ->bulkActions([
                 Tables\Actions\DeleteBulkAction::make(),
+                Tables\Actions\RestoreBulkAction::make(), // Tambahkan ini
+
             ]);
     }
 

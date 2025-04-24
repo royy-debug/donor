@@ -9,13 +9,17 @@ use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Traits\HasRoles;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Model;
+
 /**
  * @method bool hasRole(string|array $roles, string|null $guard = null)
  * @method \Illuminate\Support\Collection getRoleNames()
  */
 class User extends Authenticatable
 {
-    use HasRoles, HasFactory, Notifiable;
+    use HasRoles, HasFactory, Notifiable, SoftDeletes;
+
 
     /**
      * The attributes that are mass assignable.
