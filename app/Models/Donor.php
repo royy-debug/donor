@@ -15,17 +15,23 @@ class Donor extends Model
         'blood_type',
         'phone',
         'email',
+        'user_id',
         'weight',
         'blood_count',
         'ktp_file',
         'is_healthy',
         'has_disease_history',
         'slept_well',
+
     ];
     
     public function donations()
     {
         return $this->hasMany(Donation::class,'donor_id');
+    }
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
     
 }

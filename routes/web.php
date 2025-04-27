@@ -27,11 +27,16 @@ Route::get('/contact', function () {
 })->name('contact'); 
 
 // 🔹 Rute Donor (Pre-Screening) dengan Middleware Auth 
-Route::middleware(['auth'])->group(function () {
-    Route::get('/donor/pre-screening', [DonorPreScreenController::class, 'showForm'])->name('donor.prescreen.form');
-    Route::post('/donor/pre-screening', [DonorPreScreenController::class, 'submitForm'])->name('donor.prescreen.submit');
-});
+Route::middleware('auth')->group(function () {
+    Route::get('donor/pre-screen', [DonorPreScreenController::class, 'showForm'])
+         ->name('donor.prescreen.form');
 
+    Route::post('donor/pre-screen', [DonorPreScreenController::class, 'submitForm'])
+         ->name('donor.prescreen.submit');
+
+    Route::get('/donate', [DonorPreScreenController::class, 'handleDonate'])
+         ->name('donate');
+});
 // 🔹 Export Data Donor
 Route::get('/donors/export', function () {
     return Excel::download(new ExportDonor, 'donors.xlsx');
@@ -47,7 +52,6 @@ Route::post('/logout', function () {
     Auth::logout();
     return redirect('/'); // Redirect ke halaman utama setelah logout
 })->name('logout');
-Route::get('/donate', [DonorPreScreenController::class, 'handleDonate'])->name('donate');
 
 // Route::get('/check-role', function () {
 //     $user = User::find(2); // atau user mana aja yang udah ada role-nya

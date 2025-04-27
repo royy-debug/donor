@@ -61,6 +61,10 @@ class User extends Authenticatable
 {
     return $this->getRoleNames()->first(); // atau null kalau gak ada role
 }
+public function donors()
+    {
+        return $this->hasMany(Donor::class);
+    }
 protected $guard_name = 'web'; // ✅ Kalau perlu tambahin
 
 

@@ -20,14 +20,14 @@ use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Worksheet\Drawing;
 
-class DonorResource extends Resource 
+class DonorResource extends Resource
 {
     protected static ?string $model = Donor::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-heart';
     protected static ?string $navigationGroup = 'Management';
 
-    
+
     public static function form(Form $form): Form
     {
         return $form
@@ -41,7 +41,15 @@ class DonorResource extends Resource
                         Forms\Components\Select::make('blood_type')
                             ->options(['A' => 'A', 'B' => 'B', 'AB' => 'AB', 'O' => 'O'])->required(),
                         Forms\Components\TextInput::make('phone')->tel()->required(),
-                        Forms\Components\TextInput::make('email')->email()->required(),
+                        Forms\Components\TextInput::make('email')
+                            ->default(fn() => Auth::user()->email)
+                            ->disabled()
+                            ->required(),
+
+                        Forms\Components\Hidden::make('user_id')
+                            ->default(fn() => Auth::id()),
+
+                        // … field lain
                         Forms\Components\TextInput::make('weight')->numeric()->nullable(),
                         Forms\Components\TextInput::make('blood_count')
                             ->label('Jumlah Darah (ml)')
@@ -49,7 +57,7 @@ class DonorResource extends Resource
                             ->required()
                             ->default(450),
                     ]),
-    
+
                 Forms\Components\Section::make('Pre-Screening Kesehatan')
                     ->schema([
                         Forms\Components\Select::make('is_healthy')
@@ -62,7 +70,7 @@ class DonorResource extends Resource
                             ->options([1 => 'Ya', 0 => 'Tidak'])
                             ->required(),
                     ]),
-    
+
                 Forms\Components\Section::make('Upload Berkas')
                     ->schema([
                         Forms\Components\FileUpload::make('ktp_file')
@@ -75,7 +83,7 @@ class DonorResource extends Resource
                     ]),
             ]);
     }
-    
+
 
     public static function table(Table $table): Table
     {
@@ -85,12 +93,12 @@ class DonorResource extends Resource
                 Tables\Columns\TextColumn::make('name')->sortable()->searchable(),
                 Tables\Columns\TextColumn::make('blood_type'),
                 Tables\Columns\TextColumn::make('blood_count')
-                ->label('Jumlah Darah (ml)'),
+                    ->label('Jumlah Darah (ml)'),
                 Tables\Columns\ImageColumn::make('ktp_file')
-                ->label('KTP')
-                ->disk('public') // Tambahkan disk sesuai config kamu
-                ->circular() // Atau ->square()
-                ->url(fn ($record) => asset('storage/' . $record->ktp_file)),
+                    ->label('KTP')
+                    ->disk('public') // Tambahkan disk sesuai config kamu
+                    ->circular() // Atau ->square()
+                    ->url(fn($record) => asset('storage/' . $record->ktp_file)),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
@@ -112,8 +120,8 @@ class DonorResource extends Resource
             ])
             ->headerActions([
                 Action::make('Export Excel')
-                ->action(fn () => Excel::download(new ExportDonor(), 'donors.xlsx'))
-                ->label('Export Excel')
+                    ->action(fn() => Excel::download(new ExportDonor(), 'donors.xlsx'))
+                    ->label('Export Excel')
                     ->color('primary'),
             ])
             ->bulkActions([
