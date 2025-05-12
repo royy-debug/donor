@@ -17,6 +17,6 @@ class DashboardController extends Controller
             ->groupBy('blood_type')
             ->get();
     
-        return view('utama', compact('stok'));
+        return view('pages.home', compact('stok'));
     }
 }    

@@ -9,56 +9,51 @@ use Illuminate\Support\Facades\Route;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\ExportDonor;
 
-// 🔹 Halaman Landing Page
+/*
+|--------------------------------------------------------------------------
+| Web Routes
+|--------------------------------------------------------------------------
+| Rute aplikasi Blood Donor
+*/
+
+// 🔹 Landing Page (Public)
 Route::get('/', [DashboardController::class, 'index'])->name('utama');
 
-// 🔹 Halaman Register & Login
-Route::get('/register', [RegisterController::class, 'showRegisterForm'])->name('register');
-Route::post('/register', [RegisterController::class, 'register'])->name('register.submit');
-Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
-Route::post('/login', [LoginController::class, 'login'])->name('login.submit');
+// 🔹 Auth (Guest only)
+Route::middleware('guest')->group(function () {
+    Route::get('register', [RegisterController::class, 'showRegisterForm'])->name('register');
+    Route::post('register', [RegisterController::class, 'register'])->name('register.submit');
 
-// 🔹 Halaman Informasi & Kontak
-Route::get('/informasi-terkini', function () {
-    return view('informasi');
-})->name('informasi');
-Route::get('/contact', function () {
-    return view('contact');
-})->name('contact'); 
-
-// 🔹 Rute Donor (Pre-Screening) dengan Middleware Auth 
-Route::middleware('auth')->group(function () {
-    Route::get('donor/pre-screen', [DonorPreScreenController::class, 'showForm'])
-         ->name('donor.prescreen.form');
-
-    Route::post('donor/pre-screen', [DonorPreScreenController::class, 'submitForm'])
-         ->name('donor.prescreen.submit');
-
-    Route::get('/donate', [DonorPreScreenController::class, 'handleDonate'])
-         ->name('donate');
+    Route::get('login', [LoginController::class, 'showLoginForm'])->name('login');
+    Route::post('login', [LoginController::class, 'login'])->name('login.submit');
 });
-// 🔹 Export Data Donor
-Route::get('/donors/export', function () {
-    return Excel::download(new ExportDonor, 'donors.xlsx');
-})->name('donors.export');
 
-// 🔹 Tombol "Donate Now" - Cek Login Dulu
-// Route::get('/donate', function () {
-//     return auth()->check() 
-//         ? redirect()->route('donor.prescreen.form') 
-//         : redirect()->route('login');
-// })->name('donate');
-Route::post('/logout', function () {
-    Auth::logout();
-    return redirect('/'); // Redirect ke halaman utama setelah logout
-})->name('logout');
+// 🔹 Public Pages
+Route::view('informasi-terkini', 'informasi')->name('informasi');
+Route::view('contact', 'contact')->name('contact');
 
-// Route::get('/check-role', function () {
-//     $user = User::find(2); // atau user mana aja yang udah ada role-nya
-    
-//     dd([
-//         'roles' => $user->getRoleNames(), // list role-nya
-//         'has_super_admin' => $user->hasRole('super_admin'), // true / false
-//         'has_staf' => $user->hasRole('staf'), // true / false
-//     ]);
-// });
+// 🔹 Protected (Authenticated)
+Route::middleware('auth')->group(function () {
+    // Logout
+    Route::post('logout', function () {
+        auth()->logout();
+        return redirect()->route('utama');
+    })->name('logout');
+
+    // Pre-Screening Donor
+    Route::prefix('donor')->name('donor.')->group(function () {
+        Route::get('pre-screen', [DonorPreScreenController::class, 'showForm'])->name('prescreen.form');
+        Route::post('pre-screen', [DonorPreScreenController::class, 'submitForm'])->name('prescreen.submit');
+    });
+
+    // Donate route (after prescreen)
+    Route::get('donate', [DonorPreScreenController::class, 'handleDonate'])->name('donate');
+
+    // ↓ Export Data Donor
+    Route::get('donors/export', function () {
+        return Excel::download(new ExportDonor, 'donors.xlsx');
+    })->name('donors.export');
+});
+
+// 🔹 Fallback 404
+Route::fallback(fn() => view('errors.404'));
