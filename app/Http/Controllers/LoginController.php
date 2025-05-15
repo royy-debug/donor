@@ -14,38 +14,30 @@ class LoginController extends Controller
         return view('register.login'); // tampilin halaman login
     }
 
-    public function login(Request $request)
-    {
-        // Validasi input
-        $credentials = $request->validate([
-            'email' => ['required', 'email'],
-            'password' => ['required'],
-        ]);
+   public function login(Request $request)
+{
+    $credentials = $request->validate([
+        'email'    => ['required', 'email'],
+        'password' => ['required'],
+    ]);
 
-        // Proses login
-        if (Auth::attempt($credentials)) {
-            $request->session()->regenerate();
-
-            $user = Auth::user();
-
-            
-
-            if ($user && $user->hasRole('super_admin')){
-                return redirect()->intended('/admin');  // ➡️ Admin Panel
-            }
-            if ($user && $user->hasRole('staf')){
-                return redirect()->intended('/admin');  // ➡️ Admin Panel
-            }
-
-            // Kalau user biasa
-            return redirect()->intended('/');  // ➡️ Dashboard user biasa
-        }
-
-        // Kalau gagal login
-        return back()->withErrors([
-            'email' => 'Email atau Password salah.',
-        ]);
+    if (! Auth::attempt($credentials)) {
+        return back()->withErrors(['email' => 'Email atau Password salah.']);
     }
+
+    $request->session()->regenerate();
+    $user = Auth::user();
+
+    // **Debug role** kalau masih bingung
+    // dd($user->getRoleNames());
+
+    // Redirect tanpa “intended”
+    if ($user->hasRole('super_admin') || $user->hasRole('staf')) {
+        return redirect()->to('/admin');             // ➡️ Admin Panel
+        // atau: return redirect()->route('admin.dashboard');
+    }
+
+}
 
     public function logout(Request $request)
     {
