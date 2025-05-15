@@ -22,6 +22,7 @@ class Donor extends Model
         'is_healthy',
         'has_disease_history',
         'slept_well',
+        'status',
 
     ];
     

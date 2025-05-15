@@ -14,7 +14,7 @@ class ExportDonor implements FromCollection, WithHeadings, WithDrawings
     public function collection()
     {
         // Hanya field teks yang akan di-export
-        return Donor::select('nik', 'name', 'gender', 'blood_type', 'phone', 'email', 'blood_count')->get();
+        return Donor::select('nik', 'name', 'gender', 'blood_type', 'phone', 'email', 'blood_count', 'status')->get();
     }
 
     public function headings(): array
@@ -27,6 +27,7 @@ class ExportDonor implements FromCollection, WithHeadings, WithDrawings
             'No HP',
             'Email',
             'Jumlah Darah (ml)',
+            'Status',
         ];
     }
 
