@@ -133,7 +133,7 @@ class DonorResource extends Resource
                     ->modalHeading('QR Code Donor')
                     ->modalContent(fn($record) => view('qr-modal', [
                         'qrCode' => QrCode::size(250)
-                            ->generate("Donor ID: {$record->id} | NIK: {$record->nik} | Nama: {$record->name} | Blood_type: {$record->blood_type}"),
+                            ->generate("Donor ID: {$record->id} | NIK: {$record->nik} | Nama: {$record->name} |  Status: {$record->status}"),
                     ]))
                     ->modalSubmitAction(false),
             ])

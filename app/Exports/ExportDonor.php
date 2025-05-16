@@ -9,7 +9,7 @@ use Maatwebsite\Excel\Concerns\WithDrawings;
 use PhpOffice\PhpSpreadsheet\Worksheet\Drawing;
 use Illuminate\Support\Facades\Storage;
 
-class ExportDonor implements FromCollection, WithHeadings, WithDrawings
+class ExportDonor implements FromCollection, WithHeadings
 {
     public function collection()
     {
@@ -30,28 +30,20 @@ class ExportDonor implements FromCollection, WithHeadings, WithDrawings
             'Status',
         ];
     }
+    public function map($row): array
+{
+    return [
+        "'" .  $row->nik,
+        $row->name,
+        $row->gender,
+        $row->blood_type,
+        $row->phone,
+        $row->email,
+        $row->blood_count,
+        $row->status,
+    ];
+}
 
-    public function drawings()
-    {
-        $drawings = [];
 
-        $donors = Donor::all();
-        $rowIndex = 2; // Karena baris 1 adalah heading
-
-        foreach ($donors as $donor) {
-            if ($donor->ktp_file && Storage::disk('public')->exists($donor->ktp_file)) {
-                $drawing = new Drawing();
-                $drawing->setName('KTP');
-                $drawing->setDescription('Foto KTP');
-                $drawing->setPath(storage_path('app/public/' . $donor->ktp_file)); // path ke file
-                $drawing->setHeight(80);
-                $drawing->setCoordinates('H' . $rowIndex); // Kolom H (gambar di kolom setelah data teks)
-
-                $drawings[] = $drawing;
-            }
-            $rowIndex++;
-        }
-
-        return $drawings;
-    }
+    
 }
