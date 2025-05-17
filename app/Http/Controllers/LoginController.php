@@ -36,7 +36,7 @@ class LoginController extends Controller
         return redirect()->to('/admin');             // ➡️ Admin Panel
         // atau: return redirect()->route('admin.dashboard');
     }
-
+    return redirect('/');
 }
 
     public function logout(Request $request)
