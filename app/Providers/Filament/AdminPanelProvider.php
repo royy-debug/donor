@@ -5,6 +5,7 @@ namespace App\Providers\Filament;
 
 use BezhanSalleh\FilamentShield\Support\Utils;
 use App\Filament\Resources\UserResource;
+use App\Filament\Widgets\CoolImageWidget;
 use App\Models\User;
 use BezhanSalleh\FilamentShield\FilamentShieldPlugin;
 use BezhanSalleh\FilamentShield\Forms\ShieldSelectAllToggle;
@@ -79,6 +80,7 @@ class AdminPanelProvider extends PanelProvider
 
             ->widgets([
                 Widgets\AccountWidget::class,
+                CoolImageWidget::class,                
             ])
 
             ->middleware([
