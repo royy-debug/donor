@@ -15,7 +15,12 @@
                         <li class="flex items-center justify-between border-b pb-2 hover:bg-gray-50 transition duration-300 cursor-pointer"
                             data-aos="fade-up" data-aos-delay="{{ $loop->index * 100 }}">
                             <span class="font-medium">Blood type {{ $item->blood_type }}</span>
-                            <span class="text-red-600">{{ $item->total_darah }} ML</span>
+                           <span class="text-red-600">
+    {{ floor($item->total_darah / 450) }} Kantong
+</span>
+
+</span>
+
                         </li>
                     @endforeach
                 </ul>
@@ -26,7 +31,9 @@
 
                 <p class="text-xl font-semibold mt-4 pr-5" data-aos="fade-up"
 data-aos-delay="{{ $stok->count() * 100 }}"
-                    Total Blood Stock: <span class="text-red-600">{{ $totalDarah }} ML</span>
+Total Blood Stock: <span class="text-red-600">{{ floor($totalDarah / 450) }} Kantong</>
+<br>
+Total Blood Stock: <span class="text-red-600">{{ $totalDarah }} ML</span>
                 </p>
             </div>
 
@@ -111,7 +118,7 @@ data-aos-delay="{{ $stok->count() * 100 }}"
                         label: function(context) {
                             let label = context.label || '';
                             let value = context.raw || 0;
-                            return `${label}: ${value} ml`;
+return `${label}: ${(value / 450).toFixed(2)} kantong`;
                         }
                     }
                 }
