@@ -3,6 +3,7 @@
 namespace App\Providers\Filament;
 
 
+use App\Http\Controllers\LoginController;
 use BezhanSalleh\FilamentShield\Support\Utils;
 use App\Filament\Resources\UserResource;
 use App\Filament\Widgets\CoolImageWidget;
@@ -103,18 +104,8 @@ class AdminPanelProvider extends PanelProvider
                 // \App\Http\Middleware\RoleAccess::class,
 
             ])
-            // ->navigationItems([
-            //     ...(
-            //         auth()->user()?->hasRole('super_admin')
-            //             ? [
-            //                 // Contoh custom menu item
-            //                 NavigationItem::make('Admin Dashboard')
-            //                     ->icon('heroicon-o-cog')
-            //                     ->url('/admin'),
-            //             ]
-            //             : []
-            //     ),
-            // ])
+            ->navigationItems([
+            ])
             
             
 

@@ -25,7 +25,7 @@
                 @endphp
 
                 <p class="text-xl font-semibold mt-4 pr-5" data-aos="fade-up"
-                    data-aos-delay="{{ count($stok) * 100 }}">
+data-aos-delay="{{ $stok->count() * 100 }}"
                     Total Blood Stock: <span class="text-red-600">{{ $totalDarah }} ML</span>
                 </p>
             </div>

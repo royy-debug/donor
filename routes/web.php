@@ -8,6 +8,7 @@ use App\Http\Controllers\RegisterController;
 use Illuminate\Support\Facades\Route;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\ExportDonor;
+use App\Http\Controllers\BloodStockController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,7 +18,7 @@ use App\Exports\ExportDonor;
 */
 
 // 🔹 Landing Page (Public)
-Route::get('/', [DashboardController::class, 'index'])->name('utama');
+Route::get('/', [BloodStockController::class, 'index'])->name('utama');
 
 // 🔹 Auth (Guest only)
 Route::middleware('guest')->group(function () {
