@@ -1,8 +1,8 @@
 <!-- BLOOD STOCK SECTION -->
 <section id="blood_stock" class="py-12 bg-gradient-to-l from-red-100 via-gray-50 to-white-100">
     <div class="container mx-auto px-4">
-        <h2 class="section-title tracking-widest pb-6 font-Poppins text-center text-3xl sm:text-4xl"
-            data-aos="fade-down" data-aos-duration="1000">
+        <h2 class="section-title tracking-widest pb-6 font-Poppins text-center text-3xl sm:text-4xl" data-aos="fade-down"
+            data-aos-duration="1000">
             BLOODSTOCK
         </h2>
 
@@ -15,11 +15,11 @@
                         <li class="flex items-center justify-between border-b pb-2 hover:bg-gray-50 transition duration-300 cursor-pointer"
                             data-aos="fade-up" data-aos-delay="{{ $loop->index * 100 }}">
                             <span class="font-medium">Blood type {{ $item->blood_type }}</span>
-                           <span class="text-red-600">
-    {{ floor($item->total_darah / 450) }} Kantong
-</span>
+                            <span class="text-red-600">
+                                {{ floor($item->total_darah / 450) }} Kantong
+                            </span>
 
-</span>
+                            </span>
 
                         </li>
                     @endforeach
@@ -30,10 +30,10 @@
                 @endphp
 
                 <p class="text-xl font-semibold mt-4 pr-5" data-aos="fade-up"
-data-aos-delay="{{ $stok->count() * 100 }}"
-Total Blood Stock: <span class="text-red-600">{{ floor($totalDarah / 450) }} Kantong</>
-<br>
-Total Blood Stock: <span class="text-red-600">{{ $totalDarah }} ML</span>
+                    data-aos-delay="{{ $stok->count() * 100 }}" Total Blood Stock: <span class="text-red-600">
+                    {{ floor($totalDarah / 450) }} Kantong</>
+                    <br>
+                    Total Blood Stock: <span class="text-red-600">{{ $totalDarah }} ML</span>
                 </p>
             </div>
 
@@ -118,7 +118,7 @@ Total Blood Stock: <span class="text-red-600">{{ $totalDarah }} ML</span>
                         label: function(context) {
                             let label = context.label || '';
                             let value = context.raw || 0;
-return `${label}: ${(value / 450).toFixed(2)} kantong`;
+                            return `${label}: ${(value / 450).toFixed(2)} kantong`;
                         }
                     }
                 }

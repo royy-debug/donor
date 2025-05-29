@@ -25,6 +25,7 @@ class DonorPreScreenController extends Controller
             'name'                => 'required',
             'gender'              => 'required',
             'blood_type'          => 'required',
+                'rhesus'     => 'required|in:+,-',
             'phone'               => 'required',
             'weight'              => 'required|numeric|min:45',
             'blood_count'         => 'required|numeric|min:100|max:500',

@@ -14,6 +14,7 @@ use Maatwebsite\Excel\Facades\Excel;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Barryvdh\DomPDF\Facade\Pdf; // Tambahkan di bagian atas file
 
 class DonorResource extends Resource
 {
@@ -34,6 +35,13 @@ class DonorResource extends Resource
                             ->options(['M' => 'Male', 'F' => 'Female'])->required(),
                         Forms\Components\Select::make('blood_type')
                             ->options(['A' => 'A', 'B' => 'B', 'AB' => 'AB', 'O' => 'O'])->required(),
+                             Forms\Components\Select::make('rhesus')
+                ->label('Rhesus')
+                ->options([
+                    '+' => 'Rh +',
+                    '-' => 'Rh -',
+                ])
+                ->required(),
                         Forms\Components\TextInput::make('phone')->tel()->required(),
                         Forms\Components\TextInput::make('email')
                             ->default(fn() => auth()->user()->email)
@@ -94,7 +102,7 @@ class DonorResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('nik')->searchable(),
                 Tables\Columns\TextColumn::make('name')->sortable()->searchable(),
-                Tables\Columns\TextColumn::make('blood_type'),
+Tables\Columns\TextColumn::make('blood_full')->label('Golongan Darah'),
                 Tables\Columns\TextColumn::make('blood_count')->label('Jumlah Darah (ml)'),
                 Tables\Columns\BadgeColumn::make('status')
                     ->colors([
@@ -142,6 +150,48 @@ class DonorResource extends Resource
                     ->action(fn() => Excel::download(new ExportDonor(), 'donors.xlsx'))
                     ->label('Export Excel')
                     ->color('primary'),
+ Action::make('Export PDF')
+    ->label('Export PDF')
+    ->color('danger')
+    ->action(function () {
+        $donors = \App\Models\Donor::all();
+
+        $html = '<h2 style="text-align:center;">Data Donor Darah</h2>
+            <table border="1" cellpadding="5" cellspacing="0" width="100%" style="font-size:12px;">
+                <thead>
+                    <tr style="background-color:#f8d7da;">
+                        <th>NIK</th>
+                        <th>Nama</th>
+                        <th>Gol. Darah</th>
+                        <th>Jumlah Darah (ml)</th>
+                        <th>Status Kelayakan</th>
+                    </tr>
+                </thead>
+                <tbody>';
+
+        foreach ($donors as $donor) {
+            $blood = $donor->blood_type . $donor->rhesus;
+            $status = $donor->is_healthy ? 'Layak' : 'Tidak Layak';
+
+            $html .= '<tr>
+                <td>' . $donor->nik . '</td>
+                <td>' . $donor->name . '</td>
+                <td>' . $blood . '</td>
+                <td>' . $donor->blood_count . '</td>
+                <td>' . $status . '</td>
+            </tr>';
+        }
+
+        $html .= '</tbody></table>';
+
+        $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadHTML($html)->setPaper('A4', 'portrait');
+
+        return response()->streamDownload(
+            fn () => print($pdf->stream()),
+            'donors.pdf'
+        );
+    })
+
             ])
             ->bulkActions([
                 Tables\Actions\DeleteBulkAction::make(),

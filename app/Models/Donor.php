@@ -23,6 +23,7 @@ class Donor extends Model
         'has_disease_history',
         'slept_well',
         'status',
+        'rhesus',
 
     ];
     
@@ -34,5 +35,10 @@ class Donor extends Model
     {
         return $this->belongsTo(User::class);
     }
+    public function getBloodFullAttribute()
+{
+    return "{$this->blood_type}{$this->rhesus}";
+}
+
     
 }

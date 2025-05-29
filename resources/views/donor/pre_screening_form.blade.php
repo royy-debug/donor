@@ -83,23 +83,39 @@
                         @enderror
                     </div>
 
-                    <!-- Golongan Darah -->
-                    <div>
-                        <label class="text-sm font-medium">Golongan Darah</label>
-                        <select
-                            name="blood_type"
-                            required
-                            class="mt-1 w-full px-4 py-2 border @error('blood_type') border-red-500 @else border-gray-300 @enderror rounded-lg focus:ring-red-500 focus:outline-none"
-                        >
-                            <option value="">Pilih Golongan</option>
-                            @foreach(['A','B','AB','O'] as $type)
-                                <option value="{{ $type }}" {{ old('blood_type')==$type?'selected':'' }}>{{ $type }}</option>
-                            @endforeach
-                        </select>
-                        @error('blood_type')
-                            <p class="text-xs text-red-600 mt-1">{{ $message }}</p>
-                        @enderror
-                    </div>
+                   <!-- Golongan Darah -->
+<div>
+    <label class="text-sm font-medium">Golongan Darah</label>
+    <div class="grid grid-cols-2 gap-2 mt-1">
+        <select
+            name="blood_type"
+            required
+            class="w-full px-4 py-2 border @error('blood_type') border-red-500 @else border-gray-300 @enderror rounded-lg focus:ring-red-500 focus:outline-none"
+        >
+            <option value="">Pilih Golongan</option>
+            @foreach(['A','B','AB','O'] as $type)
+                <option value="{{ $type }}" {{ old('blood_type')==$type?'selected':'' }}>{{ $type }}</option>
+            @endforeach
+        </select>
+
+        <select
+            name="rhesus"
+            required
+            class="w-full px-4 py-2 border @error('rhesus') border-red-500 @else border-gray-300 @enderror rounded-lg focus:ring-red-500 focus:outline-none"
+        >
+            <option value="">Pilih Rhesus</option>
+            <option value="+" {{ old('rhesus')=='+'?'selected':'' }}>Rh +</option>
+            <option value="-" {{ old('rhesus')=='-'?'selected':'' }}>Rh -</option>
+        </select>
+    </div>
+    @error('blood_type')
+        <p class="text-xs text-red-600 mt-1">{{ $message }}</p>
+    @enderror
+    @error('rhesus')
+        <p class="text-xs text-red-600 mt-1">{{ $message }}</p>
+    @enderror
+</div>
+
 
                     <!-- Nomor HP -->
                     <div>

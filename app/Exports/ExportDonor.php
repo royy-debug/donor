@@ -14,21 +14,32 @@ use Maatwebsite\Excel\Events\AfterSheet;
 
 class ExportDonor implements FromCollection, WithHeadings
 {
-    public function collection()
+     public function collection()
     {
-        return Donor::select('nik', 'name', 'gender', 'blood_type', 'phone', 'email', 'blood_count', 'status')->get();
+        return Donor::all()->map(function ($donor) {
+            return [
+                'NIK'         => $donor->nik,
+                'Nama'        => $donor->name,
+                'Gol. Darah'  => $donor->blood_type . $donor->rhesus,
+                'Jumlah Darah'=> $donor->blood_count . ' ml',
+                'No HP'=> $donor->phone,
+                'Status'      => $donor->is_healthy ? 'Layak' : 'Tidak Layak',
+            ];
+        });
     }
+    // public function collection()
+    // {
+    //     return Donor::select('nik', 'name', 'gender', 'blood_type', 'phone', 'email', 'blood_count', 'status')->get();
+    // }
 
     public function headings(): array
     {
         return [
             'NIK',
             'Nama',
-            'Gender',
             'Golongan Darah',
-            'No HP',
-            'Email',
             'Jumlah Darah (ml)',
+            'No HP',
             'Status',
         ];
     }
